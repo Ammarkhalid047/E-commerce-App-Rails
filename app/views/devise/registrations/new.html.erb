@@ -1,0 +1,151 @@
+<style>
+@media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
+}
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+.card-registration .select-arrow {
+top: 13px;
+}
+
+.gradient-custom-2 {
+/* fallback for old browsers */
+background: #a1c4fd;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
+}
+
+.bg-indigo {
+background-color: #4835d4;
+}
+@media (min-width: 992px) {
+.card-registration-2 .bg-indigo {
+border-top-right-radius: 15px;
+border-bottom-right-radius: 15px;
+}
+}
+@media (max-width: 991px) {
+.card-registration-2 .bg-indigo {
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+}
+}
+</style>
+
+
+  <div class="container py-5" style="border-shadow:1px gray">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="p-5">
+                <h3 class="fw-normal mb-5" style="color: #4835d4;">Sign Up</h3>
+                  <h3 class="fw-normal mb-5" style="color: #4835d4;">General Infomation</h3>
+                  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+                  
+                  <%= render "devise/shared/error_messages", resource: resource %>
+                    <div class=" mb-4 pb-2">
+
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline">
+                      <%= f.label :name %><br />
+                      <%= f.text_field :name, autocomplete: "Name", class: 'form-control form-control-lg' %>
+                    </div>
+                  </div>
+
+                      <div class="form-outline">
+                        <%= f.label :email %><br />
+                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control form-control-lg' %>
+                      </div>
+
+                    </div>
+                    <div class="mb-4 pb-2">
+
+                      <div class="form-outline">
+                        <%= f.label :password %>
+                        <% if @minimum_password_length %>
+                        <em>(<%= @minimum_password_length %> characters minimum)</em>
+                        <% end %><br />
+                        <%= f.password_field :password, autocomplete: "new-password", class: 'form-control form-control-lg' %>
+                      </div>
+
+                    </div>
+                  
+
+                  <div class="mb-4 pb-2">
+                    <%= f.label :password_confirmation %><br />
+                    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control form-control-lg' %>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-6 bg-indigo text-white">
+                <div class="p-5">
+                  <h3 class="fw-normal mb-5">Contact Details</h3>
+                <%= f.fields_for :additional , class: 'form-group'  do |address_subform| %>
+              
+           
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      Country: <%=address_subform.text_field :country, class: 'form-control', class: 'form-control form-control-lg'%>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      City: <%=address_subform.text_field :city, class: 'form-control form-control-lg'%>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        Street: <%=address_subform.text_field :street, class: 'form-control form-control-lg'%>
+                      </div>
+
+                    </div>
+                    <div class="col-md-7 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                       Zip Code: <%=address_subform.text_field :zip, class: 'form-control form-control-lg'%>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                       Phone Number: <%=address_subform.text_field :phone, class: 'form-control form-control-lg'%>
+                    </div>
+                  </div>
+                   <%end%>
+                    <%= f.submit "Sign up", class:"btn btn-light btn-lg" %>
+                  <% end %>
+                  <hr class="my-4">
+                      Already have an account?
+                      <%= render "devise/shared/links" %> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%= render "devise/shared/links" %>

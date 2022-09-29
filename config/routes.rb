@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
-  devise_for :users
-  get 'home/index'
+  get 'product/create'
+  namespace :admin do
+    resources :category
+    resources :product
+  end
+  devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions"}
+  
+  get 'shoppingcart/:id' => "shoppingcart#show", as: "cart"
+  delete 'shoppingcart/:id' => "shoppingcart#destroy"
+
+  root 'home#index'
+  get 'admin/create_category', to: 'admin#create_category'
+  get 'admin/create_product', to: 'admin#create_product'
+  post 'cart_item/:id/add' => "cart_item#add_quantity", as: "cart_item_add"
+  post 'cart_item/:id/reduce' => "cart_item#reduce_quantity", as: "cart_item_reduce"
+  post 'cart_item' => "cart_item#create"
+  get 'cart_item/:id' => "cart_item#show"
+  delete 'cart_item/:id' => "cart_item#destroy"
+
+  get 'shoppingcart' => "shoppingcart#show"
+  resources :home
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
