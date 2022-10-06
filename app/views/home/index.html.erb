@@ -24,12 +24,30 @@
                             </div>
                    
                             <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <%= link_to 'Add to cart', cart_item_path(:product_id => product.id), method: 'post', :class => 'btn btn-outline-dark mt-auto' %>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align:center">
+                               <%if product.stock > 1%>
+                                <button id='add_cart' onclick='addtocart(<%=product.id%>)' class='btn btn-outline-dark mt-auto'> Add To Cart </button>
+                                <%elsif product.stock <= 1%>
+                                <button id='add_cart' class='btn btn-outline-dark mt-auto'> Out of stock </button>
+                                <%end%>
                             </div>
                         </div>
                     </div>
                      <%end%>
                 </div>
             </div>
-        </section>
+        <script>
+        function addtocart(id){  
+          $.ajax({
+              url: `/cart_item?product_id=${id}`,
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type: 'post',
+              dataType: "script",
+              success: function(data){
+                var cartcount = $('<div />').append(data).find(`#cart_quantity`).html();
+            $(`#cart_quantity`).html(cartcount);
+            
+           }
+          });
+      };
+      </script>

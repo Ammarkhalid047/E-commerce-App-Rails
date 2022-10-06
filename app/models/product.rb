@@ -9,7 +9,5 @@ class Product < ApplicationRecord
     has_rich_text :description
     
 
-    def get_product
-        @product = Product.find(params[:id])
-    end  
+    
 end

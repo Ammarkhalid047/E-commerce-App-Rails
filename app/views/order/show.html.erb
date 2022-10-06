@@ -1,0 +1,133 @@
+<div class="container-fluid" >
+
+<div class="container"style="margin-left:188px">
+  <!-- Title -->
+  <div class="d-flex justify-content-between align-items-center py-3">
+    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Order #16123222</h2>
+  </div>
+  
+ 
+  <!-- Main content -->
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Details -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="mb-3 d-flex justify-content-between">
+            <div>
+              <span class="me-3"><%=@order.created_at%></span>
+              <span class="me-3"><%=@order.id%></span>
+              <span class="me-3"><%=(@order.pay_method).upcase%></span>
+              <span class="badge rounded-pill bg-info"><%=@order.status.upcase%></span>
+            </div>
+            <div class="d-flex">
+              <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i> <span class="text">Invoice</span></button>
+              <div class="dropdown">
+                <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-printer"></i> Print</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <table class="table table-borderless">
+            <tbody>
+            <%total = 0%>
+            <%@order_items.each do |item|%>
+              <tr>
+                <td>
+                  <div class="d-flex mb-2">
+                  
+                    <div class="flex-shrink-0">
+                    <%if item.product.images.present?%>
+                        <%= image_tag  (item.product.images.last.url), style: 'width:35px' %>       
+                    <%else%>
+                        <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+                    <%end%>
+                    </div>
+                    <div class="flex-lg-grow-1 ms-3">
+                      <h6 class="small mb-0"><a href="#" class="text-reset"><%=item.product.name%></a></h6>
+                    </div>
+                  </div>
+                </td>
+                <td><%=item.quantity%></td>
+                <td class="text-end"><%=item.product.price.to_i * item.quantity.to_i%></td>
+                
+                <%total = ((item.product.price).to_i * (item.quantity).to_i) + total%>
+              </tr>
+            <%end%>
+            </tbody>
+            <tfoot>
+              <tr class="fw-bold">
+                <td colspan="2">TOTAL</td>
+                <td class="text-end">$ <%=total%></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!-- Payment -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="h6">Payment Method</h3>
+              <p><%= @order.pay_method.upcase%> <br>
+              Total: $ <%=total%> <span class="badge bg-success rounded-pill">UNPAID</span></p>
+            </div>
+            <div class="col-lg-6">
+              <h3 class="h6">Shipping address</h3>
+              <address>
+                <strong><%=@order.name%> <%=@order.lastname%></strong><br>
+                <%=@order.address%><br>
+                <abbr title="Phone">P:</abbr> <%=@order.user.additional.phone%>
+              </address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <!-- Customer Notes -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="h6">Customer Notes</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="h6">Order Status</h3>
+          <span class="badge rounded-pill bg-info"><%=@order.status.upcase%></span>
+          <br/><br>
+          <%if @order.status == "pending"%>
+            <%= link_to 'Change to Shipped', order_path(@order.id) , :method => "patch", :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
+            <%elsif @order.status == "shipped"%>
+            <%= link_to 'Change to Pending', order_path(@order.id) ,:method => "patch" , :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
+            <%end%>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <!-- Shipping information -->
+        <div class="card-body">
+          <h3 class="h6">User Information</h3>
+          <strong></strong>
+          <span> <i class="bi bi-box-arrow-up-right"></i> </span>
+          <hr>
+          <h3 class="h6">Address</h3>
+          <address>
+            <strong><%=@order.user.name%></strong><br>
+            Country: <%=@order.user.additional.country%><br>
+            City: <%=@order.user.additional.city%><br>
+            Street: <%=@order.user.additional.street%><br>
+            <abbr title="Phone">P:</abbr> <%=@order.user.additional.phone%>
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

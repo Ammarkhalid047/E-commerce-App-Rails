@@ -1,0 +1,2 @@
+var container = document.getElementById("cart_quantity");
+    container.innerHTML = <%= current_user.shoppingcart.cart_items.all.count %>

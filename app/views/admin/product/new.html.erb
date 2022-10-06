@@ -12,10 +12,17 @@
 
 
             <div class="form-outline mb-4" style='text-align:left'>
-              Category : <br />
+              Categories : <br />
+              
               <% @categories.each do |category| %>
               <%= f.check_box :category, {multiple: true}, category.id %>
-              <%= f.label category.title %>
+              <%= f.label category.title %><br>
+              <% category.sub_categories.each do |subcategory|%>
+              <div class="sub-cat" style="margin-left:8px">
+              <%= f.check_box :subcategory, {multiple: true}, subcategory.id%>
+              <%= f.label subcategory.title %>
+              </div>
+              <%end%>
               <%end%>
               <br />
             </div>

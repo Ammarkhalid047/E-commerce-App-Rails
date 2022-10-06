@@ -3,12 +3,37 @@
       <div class="col-12 col-md-12 col-lg-12 col-xl-12">
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
-            <h3 class="mb-5">Add category</h3>
+            <h3 class="mb-5">Add Parent Category</h3>
             <%= form_for :category, url: admin_category_index_path, class: 'form-group' do |f| %>
             <div class="form-outline mb-4" style='text-align:left'>
               Title : <%= f.text_field :title, class: 'form-control', class:'form-control form-control-lg'%><br />
             </div>
+            
+            <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
 
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center" style="margin-left:170px;">
+      <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 class="mb-5">Add Sub Category</h3>
+            <%= form_for :subcategory, url: admin_subcategory_index_path, class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Title : <%= f.text_field :title, class: 'form-control', class:'form-control form-control-lg'%><br />
+            </div>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Select Parent Category : <br />
+              <% @categories.each do |category| %>
+              <%= f.check_box :category, {multiple: true}, category.id %>
+              <%= f.label category.title %>
+              <%end%>
+              <br />
+            </div>
             <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
 
             <% end %>

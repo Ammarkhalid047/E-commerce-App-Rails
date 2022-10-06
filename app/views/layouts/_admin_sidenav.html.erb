@@ -6,7 +6,7 @@
   left: 0;
   padding: 58px 0 0; /* Height of navbar */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
+  width: 188px;
   z-index: 600;
 }
 
@@ -52,11 +52,11 @@
           <i class="fas fa-tachometer-alt fa-fw me-3">Products</i><span></span>
         </p>
         <div class="dropdown-menu1" style= "margin-left:10px; margin-bottom:15px">
-          <%= link_to 'View Products', new_admin_product_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
+          <%= link_to 'View Products', admin_product_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
           <%= link_to 'Add Products', new_admin_product_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
         </div>
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
+        <a href="/order" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-chart-area fa-fw me-3"></i><span>Orders</span>
         </a>
         <a href="#" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-lock fa-fw me-3"></i><span>Password</span></a

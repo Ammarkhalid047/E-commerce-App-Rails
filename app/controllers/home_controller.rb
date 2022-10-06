@@ -4,5 +4,6 @@ class HomeController < ApplicationController
   end
   def show
     @products = Category.friendly.find(params[:id]).products
+    @cart = CartItem.all
   end
 end

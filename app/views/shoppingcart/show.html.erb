@@ -10,7 +10,8 @@
                   class="fas fa-angle-down mt-1"></i></a></p> %>
           </div>
         </div>
-        <% @cart.each do |cart| %>
+       <%# <%=render 'content'%> 
+      <% @cart.each do |cart| %>
         <%@product = cart.get_product(cart.product_id)%>
         <div class="card rounded-3 mb-4">
           <div class="card-body p-4">
@@ -26,21 +27,20 @@
                 <p class="lead fw-normal mb-2"><%=@product.name%></p>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                  <i class="fas fa-minus"></i>
-                </button>
+                   <button id='reduce<%=cart.id%>' onclick='reduceQuantity(<%=cart.id%>,<%=cart.product.stock%>)' class='btn btn-link px-2' <%= cart.quantity == 1 ? 'disabled' : ''%> >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                </svg></button>
 
-                <input id="form1" min="0" name="quantity" value='<%=cart.quantity%>' type="number"
-                  class="form-control form-control-sm" />
+                <h2 id='quantity<%=cart.id%>'><%=cart.quantity%></h2>
 
-                <button class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                  <i class="fas fa-plus"></i>
-                </button>
+                    <button id='add<%=cart.id%>' onclick='addQuantity(<%=cart.id%>,<%=cart.product.stock%>)' class='btn btn-link px-2' <%=cart.product.stock <= 1 ? 'disabled' : ''%>>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg></button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0"> $ <%=(@product.price).to_i * (cart.quantity).to_i%></h5>
+                <h5 class="mb-0" id = "price<%=cart.id%>"> $ <%=(@product.price).to_i * (cart.quantity).to_i%></h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
               <a href='cart_item/<%=cart.id%>' method='delete'>
@@ -54,7 +54,7 @@
           </div>
         </div>
         <%end%>
-        <div class="card mb-4">
+        <%# <div class="card mb-4">
           <div class="card-body p-4 d-flex flex-row">
             <div class="form-outline flex-fill">
               <input type="text" id="form1" class="form-control form-control-lg" />
@@ -62,11 +62,12 @@
             </div>
             <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
           </div>
-        </div>
+        </div> %>
 
         <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+          <div class="card-body" >
+           <%= link_to 'Proceed to pay', new_order_path , :class => 'btn btn-primary btn-block btn-lg', :style => 'margin:0 auto; color:white' %>
+           
           </div>
         </div>
 
@@ -74,3 +75,50 @@
     </div>
   </div>
 </section>
+
+<script>
+      function checkstatus(quantity){
+        debugger
+        if(quantity == 1){
+              document.getElementById("reduce").disabled = true; 
+            }
+      }
+      function addQuantity(id,stock){  
+          $.ajax({
+              url: `/cart_item/${id}/add`,
+              type: 'get',
+              dataType: "script",
+              success: function(data){
+            var quantity = $('<div />').append(data).find(`#quantity${id}`).html();
+            $(`#quantity${id}`).html(quantity);
+            if(quantity > 1){
+              document.getElementById(`reduce${id}`).disabled = false; 
+            }
+            if (stock == 1){
+              document.getElementById(`add${id}`).disabled = true;
+            }
+            var price = $('<div />').append(data).find(`#price${id}`).html();
+            $(`#price${id}`).html(price);
+           }
+          });
+      };
+      function reduceQuantity(id,stock){  
+          $.ajax({
+              url: `/cart_item/${id}/reduce`,
+              type: 'get',
+              dataType: "script",
+              success: function(data){
+            var quantity = $('<div />').append(data).find(`#quantity${id}`).html();
+            $(`#quantity${id}`).html(quantity);
+            if(quantity == 1){
+              document.getElementById(`reduce${id}`).disabled = true; 
+            }
+            if (stock >= 0){
+              document.getElementById(`add${id}`).disabled = false;
+            }
+            var price = $('<div />').append(data).find(`#price${id}`).html();
+            $(`#price${id}`).html(price);
+           }
+          });
+      };
+</script>

@@ -9,10 +9,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :additional, dependent: :destroy
+  has_one :additional, dependent: :delete
   accepts_nested_attributes_for :additional
   has_one :shoppingcart, dependent: :destroy
-
+  has_many :order
+  
   def create_shoppingcart
     @cart = Shoppingcart.new(user_id: User.last.id)
     @cart.save
