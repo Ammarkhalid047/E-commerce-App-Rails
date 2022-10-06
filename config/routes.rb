@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :category
     resources :product
-    resources :subcategory, :only => [:new, :create]
+    resources :subcategory, :only => [:new, :create, :show]
   end
   devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions"}
   

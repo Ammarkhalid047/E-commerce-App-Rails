@@ -12,9 +12,9 @@ class Admin::ProductController < ApplicationController
       @product = Product.new(product_params)
       @product.save
       @categories = params[:product][:category]
-      @subcategory = params[:product][:category
-      new_array = @categories.reject {|x| x == "0"}
-      new_array.each do |x|
+      @subcategory = params[:product][:category]
+      category_array = @categories.reject {|x| x == "0"}
+      category_array.each do |x|
         @product_category = ProductCategory.new(product_id: @product.id ,category_id: x)
         @product_category.save
       end

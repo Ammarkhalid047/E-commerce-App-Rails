@@ -9,22 +9,11 @@
               Name : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
             </div>  
 
-
-
             <div class="form-outline mb-4" style='text-align:left'>
               Categories : <br />
-              
-              <% @categories.each do |category| %>
-              <%= f.check_box :category, {multiple: true}, category.id %>
-              <%= f.label category.title %><br>
-              <% category.sub_categories.each do |subcategory|%>
-              <div class="sub-cat" style="margin-left:8px">
-              <%= f.check_box :subcategory, {multiple: true}, subcategory.id%>
-              <%= f.label subcategory.title %>
-              </div>
-              <%end%>
-              <%end%>
+              <%= f.select(:category, options_from_collection_for_select(@categories.all, :id, :title), :id => 'category') %>
               <br />
+               <%= f.select(:subcategory, '', :id => "subcategory_id") %>
             </div>
             <div class="form-outline mb-4" style='text-align:left'>
               Description : <%= f.rich_text_area :description%><br />
@@ -45,3 +34,25 @@
       </div>
     </div>
   </div>
+  <script>
+  $(document).ready(function(){
+   $('select[name="product[category]"]').on('change',function(){
+    
+       var category_id = $(this).val();
+       if (category_id) {
+          $.ajax({
+            url: `/admin/subcategory/${category_id}`,
+            type:"GET",
+            dataType:"script",
+            succsess: function(data) {
+              alert(data)
+            },
+          });
+
+        }else{
+          alert('danger');
+        }
+
+          });
+    });
+  </script>
