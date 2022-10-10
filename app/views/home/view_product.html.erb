@@ -1,0 +1,280 @@
+<style>
+body {
+  font-family: 'open sans';
+  overflow-x: hidden; }
+
+img {
+  max-width: 100%; }
+
+.preview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px; } }
+
+.preview-pic {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+  border: none;
+  margin-top: 15px; }
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%; }
+    .preview-thumbnail.nav-tabs li img {
+      max-width: 100%;
+      display: block; }
+    .preview-thumbnail.nav-tabs li a {
+      padding: 0;
+      margin: 0; }
+    .preview-thumbnail.nav-tabs li:last-of-type {
+      margin-right: 0; }
+
+.tab-content {
+  overflow: hidden; }
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+            animation-name: opacity;
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+.card {
+  margin-top: 50px;
+  background: #eee;
+  padding: 3em;
+  line-height: 1.5em; }
+
+@media screen and (min-width: 997px) {
+  .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; } }
+
+.details {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.colors {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #6EC1E4; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px; }
+
+.product-title {
+  margin-top: 0; }
+
+.size {
+  margin-right: 10px; }
+  .size:first-of-type {
+    margin-left: 40px; }
+
+.color {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 2em;
+  width: 2em;
+  border-radius: 2px; }
+  .color:first-of-type {
+    margin-left: 20px; }
+
+.add-to-cart, .like {
+  background: #6EC1E4;
+  padding: 1.2em 1.5em;
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+          transition: background .3s ease; }
+  .add-to-cart:hover, .like:hover {
+    background: #b36800;
+    color: #fff; }
+
+.not-available {
+  text-align: center;
+  line-height: 2em; }
+  .not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff; }
+
+.orange {
+  background: #6EC1E4; }
+
+.green {
+  background: #85ad00; }
+
+.blue {
+  background: #0076ad; }
+
+.tooltip-inner {
+  padding: 1.3em; }
+
+@-webkit-keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+</style>
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+                            <%@product.images.each do |image|%>
+						  <div class="tab-pane active" id='pic<%=image.url%>'>
+                          <%if @product.images.present?%>
+                            <%= image_tag (image.url) %>  
+                            <%else%>
+                            <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+                            <%end%></div>
+                          <%end%>
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+                             <%@product.images.each do |image|%>
+						  <li class="active"><a data-target="#pic<%=image.url%>" data-toggle="tab"><%= image_tag (image.url) %></a></li>
+						<%end%>
+                        </ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title"><%=@product.name%></h3>
+						<p class="product-description"><%=raw(@product.description)%></p>
+						<h4 class="price">price: <span>$ <%=@product.price%></span></h4>
+                        <p><%=@product.likes.count%> people liked this product. <i class="fa-solid fa-heart"></i></p>
+						<div class="action">
+							<button class="add-to-cart btn btn-default" onclick='addtocart(<%=@product.id%>)' type="button">add to cart</button> <br/><br/>
+                        <% if @product.liked?(current_user)%>
+                        <%= button_to "like", like_path(@product), method: "put", disabled:true, class:"add-to-cart btn btn-sm"%><br/>
+                        <% else %>
+                        <%= button_to "like", like_path(@product), method: "put", class:"add-to-cart btn btn-default"%><br/>
+                        <% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="container" style="margin-top:40px; margin-bottom:100px">
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#description">Description</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#reviews">Reviews</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="description" class="container tab-pane active"><br>
+      <h3><b>Description</b></h3>
+      <p><%=raw(@product.description)%></p>
+    </div>
+    <div id="reviews" class="container tab-pane fade"><br>
+        <h3><b>All Reviews</b></h3>
+        <div id = "show_ratings">
+        <%=render 'show_ratings'%>
+        </div>
+      <h3><b>Add a Review</b></h3>
+      <%= form_for :review , url: review_index_path , class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Description : <br />
+             <%= f.rich_text_area :description, :id => "desc"%><br />
+            </div>
+             <div class="form-outline mb-4" style='text-align:left'>
+             Rating : <br />
+            <div id="rateYo"></div></div>
+            <%= f.hidden_field :product_id , :value => @product.id, :id => "pid"%>
+            <div id="ratings" class='btn btn-primary btn-lg btn-block' style="text-align:center; cursor:pointer"> submit </div>
+      <%end%>
+      <hr>
+    </div>
+  </div>
+  </div>
+    <script>
+        $(function () {
+        
+        $("#rateYo").rateYo({
+            rating: 0 
+        });
+        $("#rateYo").rateYo()
+                    .on("rateyo.set", function (e, data) {
+        
+                        x = data.rating;
+                    });
+        
+        });
+        $("#ratings").click(function(e) {  
+        e.preventDefault();
+        var ds = $('#desc').val(); 
+        var pid = $('#pid').val();
+            $.ajax({
+                url: `/review?description=${ds}&rating=${x}&product_id=${pid}`,
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                type: 'post',
+                // data: $("form").serialize() + "&rating="+ x + "",
+                dataType: "script",
+            });
+        });
+        function addtocart(id){  
+          $.ajax({
+              url: `/cart_item?product_id=${id}`,
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type: 'post',
+              dataType: "script",
+              success: function(data){
+                var cartcount = $('<div />').append(data).find(`#cart_quantity`).html();
+            $(`#cart_quantity`).html(cartcount);
+            
+           }
+          });
+      };
+      </script>

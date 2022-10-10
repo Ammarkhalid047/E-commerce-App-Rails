@@ -13,7 +13,7 @@ class Admin::SubcategoryController < ApplicationController
             @subcategory = @category.sub_categories.new(subcategory_params)
             @subcategory.save
         end
-        redirect_to admin_create_category_path
+        redirect_to new_admin_category_path
     end
 
 

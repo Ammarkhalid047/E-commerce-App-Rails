@@ -36,20 +36,17 @@
     <div class="position-sticky">
         <h4 style="margin-left:35px"><b>ADMIN PANEL</b></h4>
       <div class="list-group list-group-flush mx-3 mt-4">
-      
         <p
-          href=""
           class="list-group-item list-group-item-action py-2 ripple dropdown-toggle">
-          <i class="fas fa-tachometer-alt fa-fw me-3">Categories</i><span></span>
+        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Categories</span>
         </p>
         <div class="dropdown-menu1" style= "margin-left:10px; margin-bottom:15px">
           <%= link_to 'View Categories', admin_category_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
           <%= link_to 'Add Categories', new_admin_category_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
         </div>
         <p
-          href=""
           class="list-group-item list-group-item-action py-2 ripple dropdown-toggle">
-          <i class="fas fa-tachometer-alt fa-fw me-3">Products</i><span></span>
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Products</span>
         </p>
         <div class="dropdown-menu1" style= "margin-left:10px; margin-bottom:15px">
           <%= link_to 'View Products', admin_product_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>

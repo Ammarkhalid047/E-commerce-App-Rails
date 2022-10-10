@@ -12,7 +12,7 @@
             <div class="form-outline mb-4" style='text-align:left'>
               Categories : <br />
               <%= f.select(:category, options_from_collection_for_select(@categories.all, :id, :title), :id => 'category') %>
-              <br />
+              <br /> SubCategories :<br />
                <%= f.select(:subcategory, '', :id => "subcategory_id") %>
             </div>
             <div class="form-outline mb-4" style='text-align:left'>

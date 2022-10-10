@@ -19,9 +19,16 @@ Rails.application.routes.draw do
   get 'cart_item/:id' => "cart_item#show"
   delete 'cart_item/:id' => "cart_item#destroy"
 
+  put '/review/:id/like', to: 'review#like', as: 'like'
   get 'shoppingcart' => "shoppingcart#show"
-  resources :home
+  resources :home do
+    member do
+      get :view_product  
+      get :get_products
+    end
+  end
   resources :order
+  resources :review
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

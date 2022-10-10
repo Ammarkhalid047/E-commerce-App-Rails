@@ -13,7 +13,10 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :additional
   has_one :shoppingcart, dependent: :destroy
   has_many :order
-  
+  has_many :reviews, dependent: :destroy
+
+  has_many :likes
+
   def create_shoppingcart
     @cart = Shoppingcart.new(user_id: User.last.id)
     @cart.save

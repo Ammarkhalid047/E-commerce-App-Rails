@@ -1,3 +1,3 @@
-$('#product_subcategory').append(`<%=options_from_collection_for_select(@sub_categories.all,:id,:title)%>`)
+$('#product_subcategory').empty().append(`<%=options_from_collection_for_select(@sub_categories.all,:id,:title)%>`)
 
                 

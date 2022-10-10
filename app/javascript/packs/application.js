@@ -14,5 +14,6 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+//= require jquery.rateyo
 require("trix")
 require("@rails/actiontext")

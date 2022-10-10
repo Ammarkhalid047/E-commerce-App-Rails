@@ -1,0 +1,17 @@
+<%@reviews.each do |review|%>
+            <p><strong>Description : </strong><%=raw(review.description)%></p>
+            <p><strong>Rating : </strong>
+            <div id="rateYo<%=review.id%>"></div> 
+            </p>
+            <p>Reviewed by: <%=review.user.name%> </p>
+
+            <hr>
+              <script>
+                $("#rateYo"+ <%= review.id %> +"").rateYo({
+                    rating: <%= review.rating %>,
+                    readOnly: true
+                });
+                $ ('#rateYo'+ <%= review.id %> +"").attr('data-rateyo-read-only','true');
+  
+              </script>
+        <%end%>
