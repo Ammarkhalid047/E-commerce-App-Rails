@@ -24,9 +24,14 @@ class OrderController < ApplicationController
             @order_item.quantity = item.quantity
             @order_item.save
         end
-        @order.save
-        current_cart.cart_items.delete_all
-        redirect_to root_path
+        if @order.save
+          current_cart.cart_items.delete_all
+          flash.alert = "Your Order Has Been Successfully Placed!"
+          redirect_to root_path
+        else
+          flash.alert = "Your Order Cannot be Placed at the moment, Please try later!"
+          redirect_to root_path
+        end
       end
 
       def update

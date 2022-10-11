@@ -26,11 +26,11 @@
 
   <body>
   <%if user_signed_in? && current_user.role == 'admin'%>
-    <%= render 'layouts/admin_sidenav'%>
+    <%= render 'shared/admin_sidenav'%>
     <%end%>
   <%if user_signed_in? && current_user.role == 'buyer'%>
   
-    <%= render 'layouts/nav_bar'%>
+    <%= render 'shared/nav_bar'%>
   <%end%>
       <% if notice %>
         <p class="alert alert-success"><%= notice %></p>
@@ -39,6 +39,6 @@
         <p class="alert alert-danger"><%= alert %></p>
       <% end %>
     <%= yield %>
-    <%= render 'layouts/footer'%>
+    <%= render 'shared/footer'%>
   </body>
 </html>

@@ -10,12 +10,15 @@ class Admin::ProductController < ApplicationController
 
   def create
       @product = Product.new(product_params)
-      @product.save
-      puts subcategory_id: params[:product][:subcategory]
-      
+      if @product.save
         @product_category = ProductCategory.new(product_id: @product.id ,:sub_category_id=> params[:product][:subcategory])
         @product_category.save
-      
+        redirect_to new_admin_product_path
+        flash.notice = "Product Added Successfully!"
+      else 
+        redirect_to new_admin_product_path
+        flash.alert = "Product Added Successfully!"
+      end
   end
 
 

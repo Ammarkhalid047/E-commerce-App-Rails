@@ -15,6 +15,6 @@ class Product < ApplicationRecord
         !!self.likes.find{|like| like.user_id == user.id}
     end
     
-    scope :recommended_categories, -> { where("juice > 0") }
+    
     
 end

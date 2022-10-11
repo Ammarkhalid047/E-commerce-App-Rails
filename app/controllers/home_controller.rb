@@ -21,21 +21,6 @@ class HomeController < ApplicationController
     @subcategories = Category.find(params[:id]).sub_categories
     @cart = CartItem.all
   end
-  
-  
-  def view_product
-    @product = Product.find(params[:id])
-    @reviews = @product.reviews
-  end
-  
-  
-  def get_products
-    @products = SubCategory.find(params[:id]).products
-    respond_to do |format|
-      format.json { head :no_content }
-      format.js   { render :layout => false }
-   end
-  end
 
 
 end

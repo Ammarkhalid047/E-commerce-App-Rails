@@ -10,14 +10,24 @@ class Admin::CategoryController < ApplicationController
 
     def destroy
         @category = Category.friendly.find(params[:id])
-        @category.destroy
-        redirect_to admin_category_index_path
+        if @category.destroy
+            redirect_to admin_category_index_path
+            flash.notice = "Category destroyed Successfully!"
+        else 
+            redirect_to admin_category_index_path
+            flash.alert = "Category couldn't be destroyed, there has been some issue!"
+        end
     end
 
     def create
         @category = Category.new(category_params)
-        @category.save
-        new_admin_category_path
+        if @category.save
+            redirect_to new_admin_category_path
+            flash.notice = "Category created Successfully!"
+        else
+            redirect_to new_admin_category_path
+            flash.alert = "Category couldn't be created Successfully!"
+        end
     end
 
     private

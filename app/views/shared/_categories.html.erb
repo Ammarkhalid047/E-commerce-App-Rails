@@ -23,7 +23,7 @@
                    
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align:center">
-                                <%= link_to 'View', view_product_home_path(product.id), method: 'get', :class => 'btn btn-outline-dark mt-auto', :style => 'margin:10px auto' %><br />
+                                <%= link_to 'View', product_path(product.id), method: 'get', :class => 'btn btn-outline-dark mt-auto', :style => 'margin:10px auto' %><br />
                                <%if product.stock > 1%>
                                 <button id='add_cart' onclick='addtocart(<%=product.id%>)' class='btn btn-outline-dark mt-auto'> Add To Cart </button>
                                 <%elsif product.stock <= 1%>
