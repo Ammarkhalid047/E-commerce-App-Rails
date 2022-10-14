@@ -2,9 +2,9 @@
 <section class="py-5">
 <div class= "container">
     <div class="col-lg-12">
-        <%=link_to 'All', category_path(params[:id]), :class => 'btn btn-info', :style => 'color:black' %>
+        <%=link_to 'All', category_path(params[:id]), :class => 'add-to-cart btn btn-default', :style => 'color:black' %>
         <%@subcategories.each do |subcategory|%>
-            <button type="button" class="btn btn-info" onclick="get_products(<%=subcategory.id%>)"><%=subcategory.title%></button>
+            <button type="button" class="add-to-cart btn btn-default" onclick="get_products(<%=subcategory.id%>)"><%=subcategory.title%></button>
         <%end%>
     </div>
 </div>

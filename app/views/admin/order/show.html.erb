@@ -54,9 +54,8 @@
                   </div>
                 </td>
                 <td><%=item.quantity%></td>
-                <td class="text-end"><%=item.product.price.to_i * item.quantity.to_i%></td>
-                
-                <%total = ((item.product.price).to_i * (item.quantity).to_i) + total%>
+                <td class="text-end"><%=item.get_price %> </span>
+                    <%total = item.get_price + total%>
               </tr>
             <%end%>
             </tbody>
@@ -104,9 +103,9 @@
           <span class="badge rounded-pill bg-info"><%=@order.status.upcase%></span>
           <br/><br>
           <%if @order.status == "pending"%>
-            <%= link_to 'Change to Shipped', order_path(@order.id) , :method => "patch", :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
+            <%= link_to 'Change to Shipped', admin_order_path(@order.id) , :method => "patch", :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
             <%elsif @order.status == "shipped"%>
-            <%= link_to 'Change to Pending', order_path(@order.id) ,:method => "patch" , :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
+            <%= link_to 'Change to Pending', admin_order_path(@order.id) ,:method => "patch" , :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %>
             <%end%>
         </div>
       </div>

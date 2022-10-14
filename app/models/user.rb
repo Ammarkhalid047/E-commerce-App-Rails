@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :order
   has_many :reviews, dependent: :destroy
 
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   def create_shoppingcart
     @cart = Shoppingcart.new(user_id: User.last.id)

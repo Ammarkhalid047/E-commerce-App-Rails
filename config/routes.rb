@@ -4,6 +4,12 @@ Rails.application.routes.draw do
     resources :category
     resources :product
     resources :subcategory, :only => [:new, :create, :show]
+    resources :order
+    resources :promo do
+      member do
+        get :check_promo
+      end
+    end
   end
 
   resources :category, :only => [:show] do

@@ -20,15 +20,16 @@ a:hover {
                         <%= link_to category.title, category_path(category.id) , :class => 'dropdown-item' %>
                         <%end%>
                         </div>
-                        <li class="nav-item"><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'list-group-item list-group-item-action py-2 ripple'  %></li>
+                       <li> <%= link_to 'Orders', order_index_path , :class => 'nav-link' %></li>
                     </li>
                     </ul>
-                    
-                         <a href="/shoppingcart" class="btn btn-outline-dark" type="submit">
+
+                         <a href="/shoppingcart" class="add-to-cart btn btn-default" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity"><%=current_user.shoppingcart.cart_items.all.count%></span>
                         </a>
+                        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'add-to-cart btn btn-default', style: "margin-left:10px"  %>   
                 </div>
             </div>
         </nav>
