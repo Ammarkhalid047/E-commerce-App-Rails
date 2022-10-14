@@ -1,0 +1,119 @@
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+                            <%@product.images.each do |image|%>
+						  <div class="tab-pane active" id='pic<%=image.url%>'>
+                          <%if @product.images.present?%>
+                            <%= image_tag (image.url) %>  
+                            <%else%>
+                            <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+                            <%end%></div>
+                          <%end%>
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+                             <%@product.images.each do |image|%>
+						  <li class="active"><a data-target="#pic<%=image.url%>" data-toggle="tab"><%= image_tag (image.url) %></a></li>
+						<%end%>
+                        </ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title"><%=@product.name%></h3>
+						<p class="product-description"><%=raw(@product.description)%></p>
+						<h4 class="price">price: <span>$ <%=@product.price%></span></h4>
+                        <p><%=@product.likes.count%> people liked this product. <i class="fa-solid fa-heart"></i></p>
+						<div class="action">
+							<button class="add-to-cart btn btn-default" onclick='addtocart(<%=@product.id%>)' type="button">add to cart</button> <br/><br/>
+                        <% if @product.liked?(current_user)%>
+                        <%= button_to "Unlike", like_path(@product), method: "put", class:"add-to-cart btn btn-sm"%><br/>
+                        <% else %>
+                        <%= button_to "like", like_path(@product), method: "put", class:"add-to-cart btn btn-default"%><br/>
+                        <% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="container" style="margin-top:40px; margin-bottom:100px">
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#description">Description</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#reviews">Reviews</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="description" class="container tab-pane active"><br>
+      <h3><b>Description</b></h3>
+      <p><%=raw(@product.description)%></p>
+    </div>
+    <div id="reviews" class="container tab-pane fade"><br>
+        <h3><b>All Reviews</b></h3>
+        <div id = "show_ratings">
+        <%=render 'shared/show_ratings'%>
+        </div>
+      <h3><b>Add a Review</b></h3>
+      <%= form_for :review , url: review_index_path , remote: true, class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Description : <br />
+             <%= f.rich_text_area :description, :id => "desc"%><br />
+            </div>
+             <div class="form-outline mb-4" style='text-align:left'>
+             Rating : <br />
+            <div id="rateYo"></div></div>
+            <%= f.hidden_field :product_id , :value => @product.id, :id => "pid"%>
+            <%= f.hidden_field :rating , :value => "", :id => "rating_field"%>
+            <%= f.submit :submit, class:'btn btn-primary btn-lg btn-block', :id => "ratings"%>
+      <%end%>
+      <hr>
+    </div>
+  </div>
+  </div>
+    <script>
+
+
+    
+        $(function () {
+        
+        $("#rateYo").rateYo({
+            rating: 0 
+        });
+        $("#rateYo").rateYo()
+                    .on("rateyo.set", function (e, data) {
+        
+                        x = data.rating;
+                    });
+        
+        });
+        
+
+
+        $("#ratings").click(function(e) { 
+        $('#rating_field').val(x);
+        });
+
+
+
+
+        function addtocart(id){  
+          $.ajax({
+              url: `/cart_item?product_id=${id}`,
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type: 'post',
+              dataType: "script",
+              success: function(data){
+                var cartcount = $('<div />').append(data).find(`#cart_quantity`).html();
+            $(`#cart_quantity`).html(cartcount);
+            
+           }
+          });
+      };
+      </script>

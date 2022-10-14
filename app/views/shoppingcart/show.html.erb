@@ -11,62 +11,27 @@
           </div>
         </div>
        <%# <%=render 'content'%> 
-      <% @cart.each do |cart| %>
-        <%@product = cart.get_product(cart.product_id)%>
-        <div class="card rounded-3 mb-4">
-          <div class="card-body p-4">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="col-md-2 col-lg-2 col-xl-2">
-                <%if @product.images.present?%>
-                    <%= image_tag  (@product.images.last.url), style: 'width:100px' %>       
-                <%else%>
-                    <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
-                <%end%>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2"><%=@product.name%></p>
-              </div>
-              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                   <button id='reduce<%=cart.id%>' onclick='reduceQuantity(<%=cart.id%>,<%=cart.product.stock%>)' class='btn btn-link px-2' <%= cart.quantity == 1 ? 'disabled' : ''%> >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
-                </svg></button>
+     <div id="cart_items">
+      <%= render 'shared/cart_items'%>
+      </div>
+        <div class="card mb-4">
+          <div class="card-body p-4 d-flex flex-row">
+            <div class="form-outline flex-fill">
+            <%= form_for :promo, url: check_promo_admin_promo_path(current_user.shoppingcart.id), method: 'get', remote: true, class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Title : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
+            </div>
+            
+            <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
 
-                <h2 id='quantity<%=cart.id%>'><%=cart.quantity%></h2>
-
-                    <button id='add<%=cart.id%>' onclick='addQuantity(<%=cart.id%>,<%=cart.product.stock%>)' class='btn btn-link px-2' <%=cart.product.stock <= 1 ? 'disabled' : ''%>>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                    </svg></button>
-              </div>
-              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0" id = "price<%=cart.id%>"> $ <%=(@product.price).to_i * (cart.quantity).to_i%></h5>
-              </div>
-              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-              <a href='cart_item/<%=cart.id%>' method='delete'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg></a>
-
-              </div>
+            <% end %>
             </div>
           </div>
         </div>
-        <%end%>
-        <%# <div class="card mb-4">
-          <div class="card-body p-4 d-flex flex-row">
-            <div class="form-outline flex-fill">
-              <input type="text" id="form1" class="form-control form-control-lg" />
-              <label class="form-label" for="form1">Discound code</label>
-            </div>
-            <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
-          </div>
-        </div> %>
 
         <div class="card">
-          <div class="card-body" >
-           <%= link_to 'Proceed to pay', new_order_path , :class => 'btn btn-primary btn-block btn-lg', :style => 'margin:0 auto; color:white' %>
+          <div class="card-body" style="text-align:center">
+           <%= link_to 'Proceed to pay', new_order_path , :class => 'add-to-cart btn btn-default btn-lg ', :style => 'margin:0 auto; color:white' %>
            
           </div>
         </div>
@@ -77,12 +42,7 @@
 </section>
 
 <script>
-      function checkstatus(quantity){
-        debugger
-        if(quantity == 1){
-              document.getElementById("reduce").disabled = true; 
-            }
-      }
+
       function addQuantity(id,stock){  
           $.ajax({
               url: `/cart_item/${id}/add`,

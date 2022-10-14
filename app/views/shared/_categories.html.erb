@@ -1,0 +1,36 @@
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                   <% @products.each do |product|%>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <%if product.images.present?%>
+                            <%= image_tag  (product.images.last.url) %>
+                            
+                            <%else%>
+                            <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+                            <%end%>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><%=product.name%></h5>
+                                    <p><b>Category: </b><%=product.sub_categories.last.category.title%></p>
+                                    <p><b>SubCategory: </b><%=product.sub_categories.last.title%></p>
+                                    <!-- Product price-->
+                                    $ <%=product.price%>
+                                </div>
+                            </div>
+                   
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align:center">
+                                <%= link_to 'View', product_path(product.id), method: 'get', :class => 'btn btn-outline-dark mt-auto', :style => 'margin:10px auto' %><br />
+                               <%if product.stock > 1%>
+                                <button id='add_cart' onclick='addtocart(<%=product.id%>)' class='btn btn-outline-dark mt-auto'> Add To Cart </button>
+                                <%elsif product.stock <= 1%>
+                                <button id='add_cart' class='btn btn-outline-dark mt-auto'> Out of stock </button>
+                                <%end%>
+                            </div>
+                        </div>
+                    </div>
+                     <%end%>
+                </div>

@@ -10,21 +10,21 @@ class Admin::ProductController < ApplicationController
 
   def create
       @product = Product.new(product_params)
-      @product.save
-      @categories = params[:product][:category]
-      @subcategory = params[:product][:category
-      new_array = @categories.reject {|x| x == "0"}
-      new_array.each do |x|
-        @product_category = ProductCategory.new(product_id: @product.id ,category_id: x)
+      if @product.save
+        @product_category = ProductCategory.new(product_id: @product.id ,:sub_category_id=> params[:product][:subcategory])
         @product_category.save
+        redirect_to new_admin_product_path
+        flash.notice = "Product Added Successfully!"
+      else 
+        redirect_to new_admin_product_path
+        flash.alert = "Product Added Successfully!"
       end
-      redirect_to admin_create_product_path 
   end
 
 
   private
   
   def product_params
-    params.require(:product).permit(:name, :description, {images:[]}, :price, :category, :quantity, :stock)
+    params.require(:product).permit(:name, :description, {images:[]}, :price, :quantity, :stock)
   end
 end

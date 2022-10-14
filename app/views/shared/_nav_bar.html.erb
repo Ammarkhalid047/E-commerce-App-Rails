@@ -1,0 +1,35 @@
+<style>
+a:hover {
+  color: #fff;
+  background-color: lightgray !important
+}
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!"><%= image_tag "logo.png", width:'100px' %></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <%= link_to 'Shop', home_index_path , :class => 'nav-link' %>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <% Category.all.each do |category|%>
+                        <%= link_to category.title, category_path(category.id) , :class => 'dropdown-item' %>
+                        <%end%>
+                        </div>
+                       <li> <%= link_to 'Orders', order_index_path , :class => 'nav-link' %></li>
+                    </li>
+                    </ul>
+
+                         <a href="/shoppingcart" class="add-to-cart btn btn-default" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity"><%=current_user.shoppingcart.cart_items.all.count%></span>
+                        </a>
+                        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'add-to-cart btn btn-default', style: "margin-left:10px"  %>   
+                </div>
+            </div>
+        </nav>

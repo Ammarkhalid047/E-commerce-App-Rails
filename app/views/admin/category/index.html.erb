@@ -21,14 +21,25 @@
    
     <tr>
     <td><%= x %></td>
-    <td><%= category.title %></td>
+    <td><%= category.title %></td>    
     <td><%= link_to 'Delete',
                         admin_category_path(category.id),
                         method: :delete,
                         data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <%x = x+1 %>
+     <% category.sub_categories.each do |subcategory|%>
+     <tr>
+    <td><%= x %></td>
+    <td style="margin-left:50px"><%=category.title%> => <%=subcategory.title%></td>   
+    <td><%= link_to 'Delete',
+                        admin_category_path(category.id),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %></td>
+    </tr>
     <%end%>
+    <%end%>
+    
     </tbody>
     <!--Table body-->
   </table>
