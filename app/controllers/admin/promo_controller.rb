@@ -15,8 +15,8 @@ class Admin::PromoController < ApplicationController
     end    
 
     def check_promo
-        if Promo.exists?(:name => params[:name])
-            promo = Promo.find_by_name(params[:name])
+        if Promo.exists?(:name => params[:promo][:name])
+            promo = Promo.find_by_name(params[:promo][:name])
             # @promo_products = Product.where(promo_id: promo.id).joins(cart_items: :shoppingcart).where(:shoppingcart => {:id => current_user.shoppingcart.id})
             @cart = current_user.shoppingcart.cart_items
             @cart_promo = CartItem.joins(:product, :shoppingcart).where(:product => {:promo_id => promo.id}, :shoppingcart => {:id => current_user.shoppingcart.id})

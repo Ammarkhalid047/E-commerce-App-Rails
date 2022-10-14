@@ -23,8 +23,8 @@
                         <h6 class="my-0"><%=@product.name%></h6>
                         <small class="text-muted">Quantity: <%=cart.quantity%></small>
                     </div>
-                <span class="text-muted">$ <%=cart.get_price(@product) %> </span>
-                    <%total = cart.get_price(@product) + total%>
+                <span class="text-muted">$ <%=cart.get_price() %> </span>
+                    <%total = cart.get_price() + total%>
                 </li>
               <%end%>
                 <li class="list-group-item d-flex justify-content-between">

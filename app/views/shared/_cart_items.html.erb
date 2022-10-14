@@ -26,7 +26,15 @@
                     </svg></button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-               <h5 class="mb-0" id = "price<%=cart.id%>"> $ <%=cart.get_price%></h5>
+
+               <h5 class="mb-0" id = "price<%=cart.id%>"> $ 
+               <%if cart.promo.nil?%>
+                    <%=cart.get_price%>
+                <%else%>
+               <del><%=cart.orignial_price%></del> <ins><%=cart.get_price%></ins> 
+               <%end%>
+               </h5>
+
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
               <a href='cart_item/<%=cart.id%>' method='delete'>

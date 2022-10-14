@@ -17,10 +17,15 @@
         <div class="card mb-4">
           <div class="card-body p-4 d-flex flex-row">
             <div class="form-outline flex-fill">
-              <input type="text" name="name" id="form1" class="form-control form-control-lg"  />
-              <label class="form-label" for="form1">Discound code</label>
+            <%= form_for :promo, url: check_promo_admin_promo_path(current_user.shoppingcart.id), method: 'get', remote: true, class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Title : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
             </div>
-            <button type="button" class="add-to-cart btn btn-default" onclick="addPromo(<%=current_user.shoppingcart.id%>)">Apply</button>
+            
+            <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
+
+            <% end %>
+            </div>
           </div>
         </div>
 
@@ -37,14 +42,6 @@
 </section>
 
 <script>
-      function addPromo(cartid){  
-        n = $("#form1").val()
-         $.ajax({
-              url: `/admin/promo/${cartid}/check_promo?name=${n}`,
-              type: 'get',
-              dataType: "script",
-         });
-      };
 
       function addQuantity(id,stock){  
           $.ajax({

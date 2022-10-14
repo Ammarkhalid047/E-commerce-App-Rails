@@ -11,10 +11,11 @@ class Admin::OrderController < ApplicationController
 
       def update
         @order = Order.find(params[:id])
-        if @order.status == 'shipped'
-        @order.status = 'pending'
-        elsif @order.status == 'pending'
-        @order.status = 'shipped'
+        case @order.status
+        when 'shipped'
+          @order.status = 'pending'
+        when 'pending'
+          @order.status = 'shipped'
         end
         @order.save
         redirect_to admin_order_path(@order.id)

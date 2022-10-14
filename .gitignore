@@ -38,3 +38,7 @@ yarn-debug.log*
 # Ignore test cases
 /gemfile.lock
 /test/*
+
+# Ignore schema and seeds
+/db/scheme.rb
+/db/seeds.rb
