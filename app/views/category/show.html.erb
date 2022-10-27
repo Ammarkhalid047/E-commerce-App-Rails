@@ -21,4 +21,21 @@
               dataType: "script"
             })
         };
+        function addtocart(id,user){  
+            if(user){
+          $.ajax({
+              url: `/cart_item?product_id=${id}`,
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type: 'post',
+              dataType: "script",
+              success: function(data){
+                var cartcount = $('<div />').append(data).find(`#cart_quantity`).html();
+            $(`#cart_quantity`).html(cartcount);
+            
+           }
+          });
+      } else{
+        alert('PLEASE LOGIN TO ADD PRODUCTS TO CART')
+      }
+        };
         </script>

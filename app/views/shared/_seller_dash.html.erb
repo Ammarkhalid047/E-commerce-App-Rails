@@ -1,0 +1,35 @@
+  <header id="header" class="header fixed-top d-flex align-items-center">
+   <a class="navbar-brand" href="#!"><%= image_tag "logo.png", width:'100px' %></a>
+  </header>
+
+
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-heading">My Shop</li>
+      
+      <li class="nav-item">
+       <%= link_to 'Edit', edit_seller_shop_path(current_user.shop.id) , :class => 'nav-link collapsed' %>
+        </a>
+      </li>
+
+      <li class="nav-heading">PRODUCTS</li>
+
+      <li class="nav-item">
+       <%= link_to 'View Products', seller_product_index_path , :class => 'nav-link collapsed' %>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to 'New Product', new_seller_product_path , :class => 'nav-link collapsed' %>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link collapsed'  %>
+        </a>
+      </li>
+
+    </ul>
+
+  </aside>

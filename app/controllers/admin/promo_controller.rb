@@ -1,7 +1,7 @@
 class Admin::PromoController < ApplicationController
-
+    load_and_authorize_resource
     def new
-        @products = Product.all
+        @subcategories = SubCategory.all
     end
 
     def create

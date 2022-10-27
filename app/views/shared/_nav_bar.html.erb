@@ -20,16 +20,24 @@ a:hover {
                         <%= link_to category.title, category_path(category.id) , :class => 'dropdown-item' %>
                         <%end%>
                         </div>
-                       <li> <%= link_to 'Orders', order_index_path , :class => 'nav-link' %></li>
+                         <%if current_user!= nil%>
+                       <li> <%= link_to 'Orders', order_index_path , :class => 'nav-link' %></li><%end%>
                     </li>
                     </ul>
-
+                        <%if current_user!= nil%>
                          <a href="/shoppingcart" class="add-to-cart btn btn-default" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity"><%=current_user.shoppingcart.cart_items.all.count%></span>
                         </a>
+                        
                         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'add-to-cart btn btn-default', style: "margin-left:10px"  %>   
+                        <%else%>
+                            <%= link_to "Log in", new_user_session_path, :class => 'add-to-cart btn btn-default', style: "margin-left:10px" %><br />
+
+                            <%= link_to "Sign up", new_user_registration_path, :class => 'add-to-cart btn btn-default', style: "margin-left:10px" %><br />
+                        <%end%>
+
                 </div>
             </div>
         </nav>

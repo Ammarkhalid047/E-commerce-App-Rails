@@ -1,0 +1,90 @@
+ 
+ <h4 class="mb-3">Billing address</h4>
+            <%= form_for(:order, as: @order , url: order_index_path, id: 'form' ) do |f| %>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <%= f.label :name, 'First Name' %><br>
+                        <%= f.text_field :name, required: true, autofocus: true, class: "form-control"%>
+                        <div class="invalid-feedback"> Valid first name is required. </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <%= f.label :lastname , 'Last Name'%><br>
+                        <%= f.text_field :lastname, required: true, autofocus: true, class: "form-control"%>
+                        <div class="invalid-feedback"> Valid last name is required. </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <%= f.label :email %><br>
+                    <%= f.email_field :email, class:"form-control", id:"email"%>
+                    <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                </div>
+                <%if !@promo.nil?%>
+                <%= f.hidden_field :promo, value: @promo%>
+                <%end%>
+                <div class="mb-3">
+                    <%= f.label :address %><br>
+                    <%= f.text_area :address, class:"form-control" %>
+                    <div class="invalid-feedback"> Please enter your shipping address. </div>
+                </div>
+                <hr class="mb-4">
+                <h4 class="mb-3">Payment</h4>
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                       <%= f.radio_button :pay_method, 'cod', :checked => true %> 
+                      <%= label :contactmethod_cod, 'Cash On Delivery' %>
+                      <%= f.radio_button :pay_method, 'debit' %>
+                      <%= label :contactmethod_debit, 'Debit/Credit Card' %>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order Authentication</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="enter_otp">
+                        Please Enter Otp Sent To Your Entered Email!
+                        <input type="text" id='otp_auth' class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div id="order_submit" class='btn btn-primary' style="width:200px; text-align:center; cursor:pointer" onclick="CreateOrder('<%=@otp%>')"> submit </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" onclick="SendOtp('<%=@otp%>')">
+            Confirm Order
+            </button>
+                
+            </form>
+                </div>
+                
+<% end %>
+            <div id="success_tic" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                <a class="close" href="#" data-dismiss="modal">&times;</a>
+                <div class="page-body">
+                <div class="head">  
+                <%# <h3 style="margin-top:5px;">ORDER SUCCESSFULL!</h3> %>
+                <h4>Your Order Has been successfully placed!</h4>
+                </div>
+
+            <h1 style="text-align:center;"><div class="checkmark-circle">
+            <div class="background"></div>
+            <div class="checkmark draw"></div>
+            </div><h1>
+
+            </div>
+            </div>
+                </div>
+
+            </div>

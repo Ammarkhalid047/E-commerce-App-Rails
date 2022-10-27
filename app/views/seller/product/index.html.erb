@@ -1,5 +1,5 @@
 <div class="container">
-<div class="table-responsive"  style="padding-left:170px">
+<div class="table-responsive"  style="padding-left:280px; margin-top:100px">
   <!--Table-->
   <table class="table table-striped" >
 
@@ -28,7 +28,7 @@
     <td><%=category.title%></td>
     <%end%>
     <td><%= product.price %></td>
-    <td><%= link_to 'Edit Product', "" , :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %></td>
+    <td><%= link_to 'Edit Product', edit_seller_product_path(product.id) , :class => 'btn btn-primary btn-block ', :style => 'margin:0 auto; color:white' %></td>
     </tr>
     <%x = x+1 %>
     <%end%>

@@ -25,13 +25,14 @@
   </head>
 
   <body>
-  <%if user_signed_in? && current_user.role == 'admin'%>
-    <%= render 'shared/admin_sidenav'%>
-    <%end%>
-  <%if user_signed_in? && current_user.role == 'buyer'%>
-  
-    <%= render 'shared/nav_bar'%>
-  <%end%>
+        <%if request.path.include? 'admin'%>
+          <%= render 'shared/admin_sidenav'%>
+        <%elsif request.path.include? 'seller'%>
+          <%= render 'shared/seller_dash'%>
+        <%else%>
+          <%= render 'shared/nav_bar'%>
+        <%end%>
+
       <% if notice %>
         <p class="alert alert-success"><%= notice %></p>
       <% end %>

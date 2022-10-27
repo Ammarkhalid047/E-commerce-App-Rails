@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_14_062750) do
+ActiveRecord::Schema.define(version: 2022_10_20_122122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,9 +71,7 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
     t.bigint "shoppingcart_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "promo_id"
     t.index ["product_id"], name: "index_cart_items_on_product_id"
-    t.index ["promo_id"], name: "index_cart_items_on_promo_id"
     t.index ["shoppingcart_id"], name: "index_cart_items_on_shoppingcart_id"
   end
 
@@ -112,10 +110,9 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
     t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "promo_id"
+    t.float "price"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
-    t.index ["promo_id"], name: "index_order_items_on_promo_id"
     t.index ["shoppingcart_id"], name: "index_order_items_on_shoppingcart_id"
   end
 
@@ -151,8 +148,8 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "stock"
-    t.bigint "promo_id"
-    t.index ["promo_id"], name: "index_products_on_promo_id"
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_products_on_shop_id"
   end
 
   create_table "promos", force: :cascade do |t|
@@ -161,6 +158,8 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
     t.integer "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sub_category_id"
+    t.index ["sub_category_id"], name: "index_promos_on_sub_category_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -182,11 +181,24 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
     t.index ["user_id"], name: "index_shoppingcarts_on_user_id"
   end
 
+  create_table "shops", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "discount", default: false
+    t.integer "value", default: 0
+    t.index ["user_id"], name: "index_shops_on_user_id"
+  end
+
   create_table "sub_categories", force: :cascade do |t|
     t.string "title"
     t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "value"
+    t.string "code"
+    t.integer "type"
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
@@ -210,20 +222,20 @@ ActiveRecord::Schema.define(version: 2022_10_14_062750) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "additionals", "users"
   add_foreign_key "cart_items", "products"
-  add_foreign_key "cart_items", "promos"
   add_foreign_key "cart_items", "shoppingcarts"
   add_foreign_key "likes", "products"
   add_foreign_key "likes", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
-  add_foreign_key "order_items", "promos"
   add_foreign_key "order_items", "shoppingcarts"
   add_foreign_key "orders", "users"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_categories", "sub_categories"
+  add_foreign_key "products", "shops"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
   add_foreign_key "shoppingcarts", "users"
+  add_foreign_key "shops", "users"
   add_foreign_key "sub_categories", "categories"
 end

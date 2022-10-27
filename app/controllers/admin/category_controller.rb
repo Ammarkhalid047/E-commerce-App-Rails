@@ -1,5 +1,7 @@
 class Admin::CategoryController < ApplicationController
 
+    load_and_authorize_resource
+
     def new
         @categories = Category.all
     end

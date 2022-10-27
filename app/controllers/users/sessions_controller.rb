@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  def after_sign_in_path_for(user) 
+    case user.role
+    when 'buyer'
+        home_index_path
+    when 'seller'
+        seller_product_index_path
+    when 'admin'
+        admin_category_index_path
+    end
+  end
   # before_action :configure_sign_in_params, only: [:create]
 
   #GET /resource/sign_in

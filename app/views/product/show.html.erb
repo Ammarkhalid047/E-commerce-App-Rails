@@ -24,15 +24,21 @@
 					<div class="details col-md-6">
 						<h3 class="product-title"><%=@product.name%></h3>
 						<p class="product-description"><%=raw(@product.description)%></p>
-						<h4 class="price">price: <span>$ <%=@product.price%></span></h4>
+						<h4 class="price">price: <span><%if @product.shop != nil && @product.shop.discount?%>
+                                    $ <del><%=@product.price%></del> <ins><%=@product.get_discount()%></ins> 
+                                    <%else%>
+                                    $ <%=@product.price%>
+                                    <%end%></h4></span>
                         <p><%=@product.likes.count%> people liked this product. <i class="fa-solid fa-heart"></i></p>
 						<div class="action">
 							<button class="add-to-cart btn btn-default" onclick='addtocart(<%=@product.id%>)' type="button">add to cart</button> <br/><br/>
+                        <%if user_signed_in?%>
                         <% if @product.liked?(current_user)%>
                         <%= button_to "Unlike", like_path(@product), method: "put", class:"add-to-cart btn btn-sm"%><br/>
                         <% else %>
                         <%= button_to "like", like_path(@product), method: "put", class:"add-to-cart btn btn-default"%><br/>
                         <% end %>
+                        <%end%>
 						</div>
 					</div>
 				</div>

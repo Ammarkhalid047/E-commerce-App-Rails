@@ -46,11 +46,10 @@
         </div>
         <p
           class="list-group-item list-group-item-action py-2 ripple dropdown-toggle">
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Products</span>
+        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>SubCategories</span>
         </p>
         <div class="dropdown-menu1" style= "margin-left:10px; margin-bottom:15px">
-          <%= link_to 'View Products', admin_product_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
-          <%= link_to 'Add Products', new_admin_product_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
+          <%= link_to 'View SubCategories', admin_subcategory_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
         </div>
 
         <a href="/admin/order" class="list-group-item list-group-item-action py-2 ripple">
@@ -58,12 +57,6 @@
         </a>
          <p
           class="list-group-item list-group-item-action py-2 ripple dropdown-toggle">
-        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Promo Codes</span>
-        </p>
-        <div class="dropdown-menu1" style= "margin-left:10px; margin-bottom:15px">
-          <%= link_to 'View PromoCodes', admin_category_index_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
-          <%= link_to 'Add PromoCode', new_admin_promo_path , :class => 'list-group-item list-group-item-action py-2 ripple' %>
-        </div>
         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'list-group-item list-group-item-action py-2 ripple'  %>
         </p>
       </div>

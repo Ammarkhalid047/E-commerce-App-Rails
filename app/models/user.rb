@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   after_create :create_shoppingcart
+  after_create :create_shop
 
   enum role: {admin: 0, buyer: 1, seller: 2}
 
@@ -16,9 +17,16 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
 
   has_many :likes, dependent: :destroy
+  has_one :shop, dependent: :destroy
 
   def create_shoppingcart
     @cart = Shoppingcart.new(user_id: User.last.id)
     @cart.save
+  end
+  def create_shop
+    if User.last.role == 'seller'
+      @shop = User.shop.new(user_id: User.last.id)
+      @shop.create
+    end
   end
 end
