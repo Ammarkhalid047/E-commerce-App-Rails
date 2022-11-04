@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     if user_signed_in?
     @products = []
     recommended_categories = SubCategory.recommended_categories(current_user)
-    other_products = Product.joins(:sub_categories).where.not(sub_categories: {:id => recommended_categories})
+    other_products = Product.recommended_products(recommended_categories)
     recommended_categories.each do |subcategory|
       subcategory.products.each do |product|
         @products.push(product)
@@ -15,7 +15,6 @@ class HomeController < ApplicationController
       @products.push(other)
     end
     else
-      @products = []
       @products = Product.all
       @products =  @products.sort_by { |product| -product.likes.count }
     end
@@ -23,7 +22,7 @@ class HomeController < ApplicationController
 
 
   def show
-    @products = Product.joins(:sub_categories).where(:sub_categories => {:category_id => params[:id]})
+    @products = Product.product_by_category(params[:id])
     @subcategories = Category.find(params[:id]).sub_categories
     @cart = CartItem.all
   end

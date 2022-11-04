@@ -1,22 +1,6 @@
-class CartItem < ApplicationRecord
-    include PriceExtension
-    
-    belongs_to :product
-    belongs_to :shoppingcart
+module OrderExtension
 
-    belongs_to :promo, optional: true
-
-    enum discount: {inactive: 0, active: 1}
-
-    scope :discounted_items, -> (promo) {includes(product: :sub_categories).where(:sub_categories => {:code => promo})}
-    
-
-    def get_product(product_id)
-        id = product_id
-        @product = Product.find(id)
-    end
-
-    def self.createOrderItems(order, current_cart,cart_items, promo_items)
+    def createOrderItems(order, current_cart, cart_items)
         cart_items.each do |item|
             order_item = order.order_items.new(shoppingcart: current_cart, product: item.product, quantity: item.quantity)
             if !promo_items.nil?
@@ -35,6 +19,4 @@ class CartItem < ApplicationRecord
         end
    
     end
-
-    
 end
