@@ -8,14 +8,13 @@
             <div class="form-outline mb-4" style='text-align:left'>
               Name : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
             </div>  
-
             <div class="form-outline mb-4" style='text-align:left'>
-              Product : <br />
-              <%= f.select(:product_id, options_from_collection_for_select(@products.all, :id, :name)) %> <br/>
-              
+              SubCategories : <br />
+              <%= f.select(:sub_category_id, options_from_collection_for_select(@subcategories.all, :id,:title)) %> <br/>
+              </div>
             <div class="form-outline mb-4" style='text-align:left'>
               Type : <br/>
-               <%= f.select(:type, options_for_select([["Flat Rate", "flat"], ["Percentage", "percent"]])) %><br/>
+               <%= f.select(:type, options_for_select([["Flat Rate", "flat"], ["Percentage", "percentage"]])) %><br/>
             </div>
             
             <div class="form-outline mb-4" style='text-align:left'>

@@ -54,8 +54,8 @@
                   </div>
                 </td>
                 <td><%=item.quantity%></td>
-                <td class="text-end"><%=item.get_price %> </span>
-                    <%total = item.get_price + total%>
+                <td class="text-end"><%=item.price %> </span>
+                    <%total = item.price + total%>
               </tr>
             <%end%>
             </tbody>
@@ -82,7 +82,7 @@
               <address>
                 <strong><%=@order.name%> <%=@order.lastname%></strong><br>
                 <%=@order.address%><br>
-                <abbr title="Phone">P:</abbr> <%=@order.user.additional.phone%>
+                
               </address>
             </div>
           </div>
@@ -119,10 +119,10 @@
           <h3 class="h6">Address</h3>
           <address>
             <strong><%=@order.user.name%></strong><br>
-            Country: <%=@order.user.additional.country%><br>
-            City: <%=@order.user.additional.city%><br>
-            Street: <%=@order.user.additional.street%><br>
-            <abbr title="Phone">P:</abbr> <%=@order.user.additional.phone%>
+            address: <%=@order.address%><br>
+            City: <br>
+            Street: <br>
+            <abbr title="Email">E:</abbr> <%=@order.email%>
           </address>
         </div>
       </div>

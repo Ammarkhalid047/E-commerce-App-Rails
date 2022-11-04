@@ -6,36 +6,27 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
           <div>
-            <%# <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
-                  class="fas fa-angle-down mt-1"></i></a></p> %>
+
           </div>
         </div>
-       <%# <%=render 'content'%> 
+       
      <div id="cart_items">
       <%= render 'shared/cart_items'%>
       </div>
-        <div class="card mb-4">
-          <div class="card-body p-4 d-flex flex-row">
-            <div class="form-outline flex-fill">
-            <%= form_for :promo, url: check_promo_admin_promo_path(current_user.shoppingcart.id), method: 'get', remote: true, class: 'form-group' do |f| %>
-            <div class="form-outline mb-4" style='text-align:left'>
-              Title : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
-            </div>
-            
-            <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
-
-            <% end %>
-            </div>
-          </div>
-        </div>
-
+        <%if !current_user.shoppingcart.cart_items.empty?%>
         <div class="card">
           <div class="card-body" style="text-align:center">
            <%= link_to 'Proceed to pay', new_order_path , :class => 'add-to-cart btn btn-default btn-lg ', :style => 'margin:0 auto; color:white' %>
            
           </div>
         </div>
-
+        <%else%>
+        <div class="card">
+          <div class="card-body" style="text-align:center">
+            <p><b>PLEASE ADD SOMETHING TO CART TO CHECKOUT</b></p>
+          </div>
+        </div>
+        <%end%>
       </div>
     </div>
   </div>

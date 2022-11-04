@@ -1,6 +1,8 @@
 class CartItemController < ApplicationController
     protect_from_forgery with: :null_session
+    
     def show
+
         @cart_item = CartItem.find(params[:id])
         @product = Product.find(@cart_item.product.id)
         @product.stock+= @cart_item.quantity
@@ -54,13 +56,7 @@ class CartItemController < ApplicationController
     def reduce_quantity
         @cart_item = CartItem.find(params[:id])
         @product = Product.find(@cart_item.product.id)
-        if @cart_item.quantity == 1
-            @cart_item.destroy
-            @product.stock +=1
-        else
-            @cart_item.quantity -= 1
-            @product.stock+=1
-        end
+        Product.reduce_stock(@cart_item, @product)
         @cart_item.save
         @product.save
         redirect_to shoppingcart_path 

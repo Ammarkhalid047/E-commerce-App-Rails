@@ -1,0 +1,44 @@
+<div class="container">
+<div class="table-responsive"  style="padding-left:170px">
+  <!--Table-->
+  <table class="table table-striped" >
+
+    <!--Table head-->
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Category Title</th>
+        <th>SubCategory Title</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+    <%x=1%>
+    
+    <% @subcategories.each do |subcategory| %>
+   
+    <tr>
+    <td><%= x %></td>
+    <td><%= subcategory.category.title %></td>  
+    <td><%= subcategory.title %></td>    
+    <td><%= link_to 'Delete',
+                        admin_subcategory_path(subcategory.id),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Edit',
+                        promocode_admin_subcategory_path(subcategory.id),
+                        method: :get
+                        %></td>
+    </tr>
+    <%end%>
+    
+    </tbody>
+    <!--Table body-->
+  </table>
+  <!--Table-->
+</div>
+</div>
+<div>

@@ -36,9 +36,10 @@ yarn-debug.log*
 .yarn-integrity
 
 # Ignore test cases
-/gemfile.lock
+Gemfile.lock
 /test/*
 
-# Ignore schema and seeds
+# Ignore schema and seedsgit 
 /db/scheme.rb
-/db/seeds.rb
+
+*.env

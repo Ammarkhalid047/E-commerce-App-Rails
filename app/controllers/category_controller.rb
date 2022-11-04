@@ -1,7 +1,7 @@
 class CategoryController < ApplicationController
 
     def show
-        @products = Product.joins(:sub_categories).where(:sub_categories => {:category_id => params[:id]})
+        @products = Product.product_by_category(params[:id])
         @subcategories = Category.find(params[:id]).sub_categories
         @cart = CartItem.all
     end

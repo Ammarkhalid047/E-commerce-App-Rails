@@ -1,0 +1,58 @@
+<div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center" style="margin-left:290px;">
+      <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 class="mb-5">Add Product</h3>
+            <%= form_for :product, as: @product , url: seller_product_index_path, class: 'form-group' do |f| %>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Name : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
+            </div>  
+
+            <div class="form-outline mb-4" style='text-align:left'>
+              Categories : <br />
+              <%= f.select(:category, options_from_collection_for_select(@categories.all, :id, :title), :id => 'category') %>
+              <br /> SubCategories :<br />
+               <%= f.select(:sub_categories, '', :id => "subcategory_id") %>
+            </div>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Description : <%= f.rich_text_area :description%><br />
+            </div>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Price : <%= f.text_field :price, class: 'form-control', class:'form-control form-control-lg'%><br />
+            </div>
+            <div class="form-outline mb-4" style='text-align:left'>
+              Stock Quantity : <%= f.number_field :stock, class: 'form-control', class:'form-control form-control-lg'%><br />
+            </div>
+            <div class="form-outline mb-4" style='text-align:left; margin-bottom:10px;'>
+            Product Images :<%= f.file_field :images,multiple:true, class: "form-control-file", id:"exampleFormControlFile1", style: "margin:10px;" %><br />
+            </div>
+            <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
+            
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  $(document).ready(function(){
+   $('select[name="product[category]"]').on('change',function(){
+    
+       var category_id = $(this).val();
+       if (category_id) {
+          $.ajax({
+            url: `/admin/subcategory/${category_id}`,
+            type:"GET",
+            dataType:"script",
+            succsess: function(data) {
+              alert(data)
+            },
+          });
+
+        }else{
+          alert('danger');
+        }
+
+          });
+    });
+  </script>
