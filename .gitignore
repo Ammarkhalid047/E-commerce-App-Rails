@@ -41,3 +41,5 @@ Gemfile.lock
 
 # Ignore schema and seedsgit 
 /db/scheme.rb
+
+*.env
