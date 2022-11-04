@@ -9,6 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new
     @additional = @user.build_additional
     @Shoppingcart = @user.build_shoppingcart
+    @cities = City.all
   end
 
   # POST /resource

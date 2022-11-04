@@ -23,31 +23,13 @@ class OrderController < ApplicationController
         cart_items = current_user.shoppingcart.cart_items  
         promo = params[:order][:promo]
         if promo != nil
-        promo_items = cart_items.includes(product: :sub_categories).where(:sub_categories => {:code => promo})
+        promo_items = cart_items.discounted_items(promo)
         end
         @order = current_user.order.new(order_params)
         current_cart = current_user.shoppingcart
         cart_items = current_cart.cart_items
-        cart_items.each do |item|
-            @order_item = @order.order_items.new
-            @order_item.shoppingcart = current_cart
-            @order_item.product = item.product
-            @order_item.quantity = item.quantity
-            if !promo_items.nil?
-              promo_items.each do |promo_item|  
-                if promo_item == item    
-                  byebug
-                  @order_item.price = item.get_price(promo_item)
-                end
-                if item.product.sub_categories.last.code != promo
-                  @order_item.price = item.orignial_price
-                end
-              end
-            elsif promo_items.nil?
-              @order_item.price = item.orignial_price
-            end
-            @order_item.save
-        end
+        CartItem.createOrderItems(@order, current_cart, cart_items, promo_items)
+        
         if @order.save
           current_cart.cart_items.delete_all
           flash.notice = "Your Order Has Been Successfully Placed!"

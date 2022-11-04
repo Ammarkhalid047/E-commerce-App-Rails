@@ -107,7 +107,8 @@ border-bottom-right-radius: 15px;
 
                   <div class="mb-4 pb-2">
                     <div class="form-outline form-white">
-                      City: <%=address_subform.text_field :city, class: 'form-control form-control-lg'%>
+                   City:  <%= address_subform.select :city, options_from_collection_for_select(@cities, "id", "name"), id: "simple-example" %>
+                   
                     </div>
                   </div>
 
@@ -149,3 +150,9 @@ border-bottom-right-radius: 15px;
     </div>
   </div>
 <%= render "devise/shared/links" %>
+<script>
+                    $(document).ready(function() {
+                      $('#user_additional_attributes_city').select2();
+                    });
+                    
+</script>

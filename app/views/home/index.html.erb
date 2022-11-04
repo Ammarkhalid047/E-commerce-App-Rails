@@ -65,9 +65,9 @@
               success: function(data){
                 var cartcount = $('<div />').append(data).find(`#cart_quantity`).html();
             $(`#cart_quantity`).html(cartcount);
-             document.getElementById("alerts").style.display = "block";
-            document.getElementById("alerts").innerHTML = 'Product Added to cart';
-            $("#success_tic").modal('show');
+                document.getElementById("alerts").style.display = "block";
+                document.getElementById("alerts").innerHTML = 'Product Added to cart';
+                $("#success_tic").modal('show');
            }
           });
       } else{

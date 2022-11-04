@@ -5,5 +5,8 @@ class ProductController < ApplicationController
         @reviews = @product.reviews
     end
 
-
+    def search
+        name = "%#{params[:product][:name]}%"
+        @products = Product.searched(name)
+    end
 end

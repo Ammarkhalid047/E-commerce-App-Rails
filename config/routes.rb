@@ -28,7 +28,11 @@ Rails.application.routes.draw do
     end
   end
   
-    resources :product, :only => [:show]
+    resources :product, :only => [:show] do
+      member do
+        get :search
+      end
+    end
     resources :subcategory, :only => [:show]
     resources :home , :only => [:index]
     resources :order do
@@ -39,7 +43,7 @@ Rails.application.routes.draw do
     resources :review
     resources :authentication
 
-  devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions"}
+  devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions", omniauth_callbacks: 'users/omniauth_callbacks'}
   
   get 'shoppingcart/:id' => "shoppingcart#show", as: "cart"
   delete 'shoppingcart/:id' => "shoppingcart#destroy"

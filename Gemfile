@@ -32,6 +32,11 @@ gem 'friendly_id', '~> 5.4.0', require: "friendly_id"
 
 gem 'cancancan', '~> 1.9'
 
+gem 'dotenv-rails'
+
+gem 'omniauth-google-oauth2'
+
+gem 'omniauth-facebook'
 
 # gem 'rateyo-rails'
 
@@ -63,3 +68,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "omniauth-rails_csrf_protection"

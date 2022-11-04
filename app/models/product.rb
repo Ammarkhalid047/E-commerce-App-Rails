@@ -17,6 +17,8 @@ class Product < ApplicationRecord
     belongs_to :shop, optional: true
 
     has_many :likes
+
+    scope :searched, -> (name) { joins(:sub_categories).where("lower(sub_categories.title) LIKE ? OR lower(name) LIKE ? OR lower(description) LIKE ?", name.downcase, name.downcase, name.downcase) }
     
     def liked?(user)
         !!self.likes.find{|like| like.user_id == user.id}
