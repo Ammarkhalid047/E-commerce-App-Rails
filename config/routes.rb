@@ -60,7 +60,7 @@ Rails.application.routes.draw do
   get 'shoppingcart' => "shoppingcart#show"
 
 
-  
+  match '*path', :to => redirect('/404_Not_Found.html'), via: :all
   
   
 end
