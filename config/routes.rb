@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-
+  
   get 'errors/not_found'
   namespace :seller do
+    resources :subscriptions
     resources :product
     resources :shop
   end
 
   namespace :admin do
     resources :category
+    resources :plan
     resources :subcategory do
       member do
         get :check_promo
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
     end
     resources :review
     resources :authentication
+    resources :webhook, only: [:create]
 
   devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions", omniauth_callbacks: 'users/omniauth_callbacks'}
   

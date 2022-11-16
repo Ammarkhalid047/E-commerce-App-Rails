@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   
   
   def index
+    @user11 = Stripe::Customer.retrieve('cus_MoM6uq2CGRxiHG')
     if user_signed_in?
     @products = []
     recommended_categories = SubCategory.recommended_categories(current_user)

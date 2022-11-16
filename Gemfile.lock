@@ -140,6 +140,8 @@ GEM
     minitest (5.16.3)
     msgpack (1.5.6)
     multi_xml (0.6.0)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
@@ -238,6 +240,11 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    sinatra (3.0.2)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.2)
+      tilt (~> 2.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -250,6 +257,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     ssrf_filter (1.1.1)
+    stripe (7.1.0)
     thor (1.2.1)
     tilt (2.0.11)
     turbolinks (5.2.1)
@@ -306,7 +314,9 @@ DEPENDENCIES
   rails (~> 6.1.7)
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
+  sinatra
   spring
+  stripe
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

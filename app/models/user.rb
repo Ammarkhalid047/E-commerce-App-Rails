@@ -29,8 +29,8 @@ class User < ApplicationRecord
 
   def create_shop
     if User.last.role == 'seller'
-      @shop = User.shop.new(user_id: User.last.id)
-      @shop.create
+      @shop = Shop.new(user_id: User.last.id)
+      @shop.save
     end
   end
 

@@ -38,6 +38,10 @@ gem 'omniauth-google-oauth2'
 
 gem 'omniauth-facebook'
 
+gem 'stripe'
+
+gem 'sinatra'
+
 # gem 'rateyo-rails'
 
 group :development, :test do

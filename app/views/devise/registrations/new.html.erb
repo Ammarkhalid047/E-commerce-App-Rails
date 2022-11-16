@@ -134,7 +134,23 @@ border-bottom-right-radius: 15px;
                        Phone Number: <%=address_subform.text_field :phone, class: 'form-control form-control-lg'%>
                     </div>
                   </div>
+                  
                    <%end%>
+                   <div class="mb-4 pb-2" id="element">
+                    <div class="form-outline form-white">
+                        Buyer: <%= f.radio_button :role, 'buyer' %>
+                        Seller: <%= f.radio_button :role, 'seller', id:'seller' %>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2" id="plans" style="display: none;">
+                    <div class="form-outline form-white">
+                        <%Plan.all.each do |plan|%>
+                        <%=plan.name%>: <%= f.radio_button :plan, plan.name %>
+                        <%end%>
+                    </div>
+                  </div>
+
                     <%= f.submit "Sign up", class:"btn btn-light btn-lg" %>
                   <% end %>
                   <hr class="my-4">
@@ -154,5 +170,14 @@ border-bottom-right-radius: 15px;
                     $(document).ready(function() {
                       $('#user_additional_attributes_city').select2();
                     });
+
+                    $('#element').click(function() {
+                        if($('#seller').is(':checked')) { 
+                              $('#plans').css('display', 'block');
+                         }
+                         else{
+                              $('#plans').css('display', 'none');
+                         }
+                      });
                     
 </script>
