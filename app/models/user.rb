@@ -4,6 +4,7 @@ class User < ApplicationRecord
   after_create :create_shop
 
   enum role: {admin: 0, buyer: 1, seller: 2}
+  enum subsciption_status: {inactive: 0, active: 1}
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -16,6 +17,8 @@ class User < ApplicationRecord
   has_one :shoppingcart, dependent: :destroy
   has_many :order
   has_many :reviews, dependent: :destroy
+  has_many :payments, dependent: :destroy
+  has_many :plan, through: :payments
 
   has_many :likes, dependent: :destroy
   has_one :shop, dependent: :destroy

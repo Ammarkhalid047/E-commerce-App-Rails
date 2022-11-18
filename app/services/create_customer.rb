@@ -6,7 +6,7 @@ class CreateCustomer
             customer = Stripe::Customer.create(
               email: user.email,
               metadata: {
-                selected_plan: user.plan
+                selected_plan: user.plan_id
               }
             )
       rescue Stripe::InvalidRequestError => e
@@ -20,10 +20,10 @@ class CreateCustomer
 
     end
     def create_checkout_session(customer, user)
-        plan = Plan.find_by_name(user.plan)
+        plan = Plan.find(user.plan_id)
         checkout = Stripe::Checkout::Session.create({
           customer: customer.id,
-          success_url: 'http://localhost:3000/users/sign_in',
+          success_url: 'http://localhost:3000/users/sign_in?session_id={CHECKOUT_SESSION_ID}',
           cancel_url: 'http://localhost:3000/users/sign_up',
           payment_method_types: ['card'],
           line_items: [{

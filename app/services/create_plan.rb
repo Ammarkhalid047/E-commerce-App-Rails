@@ -1,7 +1,7 @@
 require 'stripe'
 class CreatePlan
 
-    def plan_create(name, price)
+    def plan_create(name, price, duration)
       
       begin
         plan = Stripe::Product.create(
@@ -10,7 +10,7 @@ class CreatePlan
             default_price_data: {
               unit_amount: price.to_i,
               currency: 'usd',
-              recurring: {interval: 'month'},
+              recurring: {interval: duration},
             },
             expand: ['default_price'],
           },

@@ -5,9 +5,13 @@ class Seller::SubscriptionsController < ApplicationController
   end
 
   def create
-    createsubscription = CreateSubscription.new
-    subscription = createsubscription.subscription_create(params[:subscription][:price_id]);
-    byebug
+    object = CreateSubscription.new
+    subscription = object.subscription_create(params[:subscription][:price_id])
+  end
+
+  def portalsession
+    object = CreateCustomerPortal.new
+    portal = object.create_portal_session(current_user.stripe_customer_id)
   end
 
 end

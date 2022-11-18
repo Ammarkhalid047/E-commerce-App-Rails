@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_16_100850) do
+ActiveRecord::Schema.define(version: 2022_11_17_074221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,17 @@ ActiveRecord::Schema.define(version: 2022_11_16_100850) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.integer "amount"
+    t.integer "pay_type"
+    t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id"], name: "index_payments_on_plan_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "plans", force: :cascade do |t|
     t.string "stripe_id"
     t.string "name"
@@ -235,8 +246,11 @@ ActiveRecord::Schema.define(version: 2022_11_16_100850) do
     t.string "uid"
     t.string "plan"
     t.string "stripe_customer_id"
+    t.integer "subscription_status", default: 0
+    t.bigint "plan_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["order_id"], name: "index_users_on_order_id"
+    t.index ["plan_id"], name: "index_users_on_plan_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -251,6 +265,8 @@ ActiveRecord::Schema.define(version: 2022_11_16_100850) do
   add_foreign_key "order_items", "products"
   add_foreign_key "order_items", "shoppingcarts"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "plans"
+  add_foreign_key "payments", "users"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_categories", "sub_categories"
@@ -260,4 +276,5 @@ ActiveRecord::Schema.define(version: 2022_11_16_100850) do
   add_foreign_key "shoppingcarts", "users"
   add_foreign_key "shops", "users"
   add_foreign_key "sub_categories", "categories"
+  add_foreign_key "users", "plans"
 end

@@ -17,10 +17,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new(user_params)
     if @user.valid?
       createcustomer = CreateCustomer.new
-      customer = createcustomer.create_stripe_customer(@user)
-      @user.stripe_customer_id = customer.id
-      @session = createcustomer.create_checkout_session(customer, @user)
       @user.save!
+      customer = createcustomer.create_stripe_customer(@user)
+      @session = createcustomer.create_checkout_session(customer, @user)
       redirect_to @session.url
     else
       flash.now[:error] = @user.errors.full_messages
@@ -61,7 +60,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
    end
 
    def user_params
-    params.require(:user).permit(:name, :email, :password, :role, :plan, additional_attributes: [:country, :street, :zip, :phone])
+    params.require(:user).permit(:name, :email, :password, :role, :plan_id, additional_attributes: [:country, :street, :zip, :phone])
    end
 
   # If you have extra params to permit, append them to the sanitizer.

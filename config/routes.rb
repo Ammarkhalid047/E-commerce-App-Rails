@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   
   get 'errors/not_found'
   namespace :seller do
-    resources :subscriptions
+    resources :subscriptions do
+      member do
+        get :portalsession
+      end
+    end
     resources :product
     resources :shop
   end

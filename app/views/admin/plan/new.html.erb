@@ -7,6 +7,7 @@
             <%= form_for :plan, url: admin_plan_index_path, class: 'form-group' do |f| %>
             <div class="form-outline mb-4" style='text-align:left'>
               Name : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
+              Duration : <%= f.select :duration,['day','month','year'], class: 'form-control form-control-lg'%><br />
               Price : <%= f.text_field :display_price, class: 'form-control', class:'form-control form-control-lg'%><br />
               
             </div>
