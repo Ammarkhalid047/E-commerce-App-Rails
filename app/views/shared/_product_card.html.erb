@@ -1,0 +1,44 @@
+<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
+  <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+    <% @products.each do |product| %>
+    <div class="col"> 
+      <div class="card h-100 shadow-sm">
+       <%if product.images.present?%>
+            <%= image_tag  (product.images.last.url) %>                    
+       <%else%>
+            <img class="card-img-top" src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" alt="..." />
+       <%end%>
+        
+        <div class="card-body">
+          <div class="clearfix mb-3">
+            <span class="float-start badge rounded-pill bg-success">
+            <%if product.shop != nil && product.shop.discount?%>
+                $ <del><%=product.price%></del> <ins><%=product.get_discount()%></ins> <br/>
+
+            <%else%>
+                $ <%=product.price%>
+            <%end%>
+            </span>
+            <%# <span class="float-end"><a href="#" class="small text-muted text-uppercase aff-link">reviews</a></span> %>
+          </div>
+          <h5 class="card-title">
+                <%=product.name%>
+          </h5>
+
+          <div class="d-grid gap-2 my-4">
+                <%= link_to 'View', product_path(product.id), method: 'get', :class => 'add-to-cart btn btn-default', :style => '' %><br />
+             <%if product.stock > 1%>
+                <button id='add_cart' onclick='addtocart(<%=product.id%>,<%=user_signed_in?%>)' class='add-to-cart btn btn-default'> Add To Cart </button>
+            <%elsif product.stock <= 1%>
+                <button id='add_cart' class='btn btn-outline-dark mt-auto'> Out of stock </button>
+            <%end%>
+          </div>
+
+        </div>
+       
+      </div>
+       
+    </div>
+    <%end%>
+</div>
+</div>

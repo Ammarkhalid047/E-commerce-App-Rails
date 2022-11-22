@@ -14,8 +14,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    @user = User.new(user_params)
+    if @user.valid?
+      createcustomer = CreateCustomer.new
+      @user.save!
+      customer = createcustomer.create_stripe_customer(@user)
+      @session = createcustomer.create_checkout_session(customer, @user)
+      redirect_to @session.url
+    else
+      flash.now[:error] = @user.errors.full_messages
+      render :new
+    end
   end
+
 
   # GET /resource/edit
   # def edit
@@ -45,7 +56,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
    def configure_sign_up_params
-     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, additional_attributes: [:country, :city, :street, :zip, :phone]])
+     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :role, additional_attributes: [:country, :street, :zip, :phone]])
+   end
+
+   def user_params
+    params.require(:user).permit(:name, :email, :password, :role, :plan_id, additional_attributes: [:country, :street, :zip, :phone])
    end
 
   # If you have extra params to permit, append them to the sanitizer.

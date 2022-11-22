@@ -9,6 +9,7 @@
         <li class="nav-heading">My Shop</li>
       
       <li class="nav-item">
+      <%= link_to 'Plans', new_seller_subscription_path , :class => 'nav-link collapsed' %>
        <%= link_to 'Edit', edit_seller_shop_path(current_user.shop.id) , :class => 'nav-link collapsed' %>
         </a>
       </li>

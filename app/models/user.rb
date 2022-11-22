@@ -4,6 +4,7 @@ class User < ApplicationRecord
   after_create :create_shop
 
   enum role: {admin: 0, buyer: 1, seller: 2}
+  enum subsciption_status: {inactive: 0, active: 1}
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -16,9 +17,14 @@ class User < ApplicationRecord
   has_one :shoppingcart, dependent: :destroy
   has_many :order
   has_many :reviews, dependent: :destroy
+  has_many :payments, dependent: :destroy
+  # has_one :plan, dependent: :destroy
+  belongs_to :plan, optional: true
 
   has_many :likes, dependent: :destroy
   has_one :shop, dependent: :destroy
+
+  has_one :subscription
 
 
   def create_shoppingcart
@@ -26,11 +32,10 @@ class User < ApplicationRecord
     @cart.save
   end
 
-
   def create_shop
     if User.last.role == 'seller'
-      @shop = User.shop.new(user_id: User.last.id)
-      @shop.create
+      @shop = Shop.new(user_id: User.last.id)
+      @shop.save
     end
   end
 
