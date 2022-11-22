@@ -5,9 +5,8 @@ class CreateCustomerPortal
       begin
         session = Stripe::BillingPortal::Session.create({
             customer: stripe_customer_id,
-            return_url: 'http://localhost/seller',
+            return_url: 'http://localhost:3000/seller/product',
           })
-          redirect session.url
       rescue Stripe::InvalidRequestError => e
         puts "An invalid request occurred."
       rescue Stripe::StripeError => e

@@ -18,17 +18,19 @@ class User < ApplicationRecord
   has_many :order
   has_many :reviews, dependent: :destroy
   has_many :payments, dependent: :destroy
-  has_many :plan, through: :payments
+  # has_one :plan, dependent: :destroy
+  belongs_to :plan, optional: true
 
   has_many :likes, dependent: :destroy
   has_one :shop, dependent: :destroy
+
+  has_one :subscription
 
 
   def create_shoppingcart
     @cart = Shoppingcart.new(user_id: User.last.id)
     @cart.save
   end
-
 
   def create_shop
     if User.last.role == 'seller'

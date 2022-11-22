@@ -1,7 +1,7 @@
 class Seller::SubscriptionsController < ApplicationController
   
   def new
-    @plans = Plan.all
+    @plan = current_user.plan
   end
 
   def create
@@ -12,6 +12,7 @@ class Seller::SubscriptionsController < ApplicationController
   def portalsession
     object = CreateCustomerPortal.new
     portal = object.create_portal_session(current_user.stripe_customer_id)
+    redirect_to portal.url
   end
 
 end

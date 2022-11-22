@@ -4,7 +4,7 @@ class Admin::PlanController < ApplicationController
 
     def create
         createplan = CreatePlan.new
-        plan = createplan.plan_create(params[:plan][:name], params[:plan][:display_price], params[:plan][:duration])
+        plan = createplan.create_stripe_plan(params[:plan][:name], params[:plan][:display_price], params[:plan][:duration])
         if plan != nil
         @plan = Plan.new(stripe_id: plan.id, name: plan.name, display_price: plan.default_price.unit_amount, price_id: plan.default_price.id)
         @plan.save

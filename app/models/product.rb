@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
     include DiscountExtension
 
+    before_create :check_seller_plan
+
     mount_uploaders :images, ImageUploader  
 
     has_many :product_categories, dependent: :destroy
@@ -37,7 +39,33 @@ class Product < ApplicationRecord
             product.stock+=1
         end
     end
-    
+
+    def check_seller_plan   
+        product_count = self.shop.products.where('created_at > ?', DateTime.now.beginning_of_month).count
+        case self.shop.user.subscription.plan.name
+        when 'Premium Plan'
+            if product_count >= 20
+                self.errors.add(:created_at, 'You have reached your limit for this month')
+                throw :abort
+            else
+                return true
+            end
+        when 'Gold Plan'
+            if product_count >= 10
+                self.errors.add(:created_at, 'You have reached your limit for this month')
+                throw :abort
+            else
+                return true 
+            end
+        when 'Basic Plan'
+            if product_count >= 3
+                self.errors.add(:created_at, 'You have reached your limit for this month')
+                throw :abort
+            else
+                return true
+            end
+        end
+    end
 
     
 end

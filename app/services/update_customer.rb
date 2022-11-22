@@ -3,7 +3,7 @@ class UpdateCustomer
 
     def update_subscription_status(user)
       user.update!(subscription_status: 1)
-      payment = Payment.new(pay_type: 0, user_id: user.id, plan_id: plan.id, amount: user.payments.last.plan)
+      payment = Payment.new(pay_type: 0, user_id: user.id, plan_id: user.plan_id, amount: user.plan.display_price)
       payment.save
     end
 

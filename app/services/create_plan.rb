@@ -1,7 +1,7 @@
 require 'stripe'
 class CreatePlan
 
-    def plan_create(name, price, duration)
+    def create_stripe_plan(name, price, duration)
       
       begin
         plan = Stripe::Product.create(
@@ -22,7 +22,7 @@ class CreatePlan
       else
         return plan
       end
-       
+      
 
     end
 
