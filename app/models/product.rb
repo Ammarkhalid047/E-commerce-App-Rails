@@ -42,23 +42,24 @@ class Product < ApplicationRecord
 
     def check_seller_plan   
         product_count = self.shop.products.where('created_at > ?', DateTime.now.beginning_of_month).count
-        case self.shop.user.subscription.plan.name
+        plan = self.shop.user.subscription.plan
+        case plan.name
         when 'Premium Plan'
-            if product_count >= 20
+            if product_count >= plan.no_of_products || self.images.length > plan.no_of_images
                 self.errors.add(:created_at, 'You have reached your limit for this month')
                 throw :abort
             else
                 return true
             end
         when 'Gold Plan'
-            if product_count >= 10
+            if product_count >= plan.no_of_products || self.images.length > plan.no_of_images
                 self.errors.add(:created_at, 'You have reached your limit for this month')
                 throw :abort
             else
                 return true 
             end
         when 'Basic Plan'
-            if product_count >= 3
+            if product_count >= plan.no_of_products || self.images.length > plan.no_of_images
                 self.errors.add(:created_at, 'You have reached your limit for this month')
                 throw :abort
             else

@@ -9,8 +9,9 @@
               Name : <%= f.text_field :name, class: 'form-control', class:'form-control form-control-lg'%><br />
               Duration : <%= f.select :duration,['day','month','year'], class: 'form-control form-control-lg'%><br />
               Price : <%= f.text_field :display_price, class: 'form-control', class:'form-control form-control-lg'%><br />
-              
-            </div>
+              Number of products per month : <%= f.number_field :no_of_products, class: 'form-control', class:'form-control form-control-lg'%><br />
+              Number of images per product : <%= f.number_field :no_of_images, class: 'form-control', class:'form-control form-control-lg'%><br />
+              </div>
             
             <%= f.submit "Submit", class:"btn btn-primary btn-lg btn-block" %>
 

@@ -146,7 +146,9 @@ border-bottom-right-radius: 15px;
                   <div class="mb-4 pb-2" id="plans" style="display: none;">
                     <div class="form-outline form-white">
                         <%Plan.all.each do |plan|%>
-                        <%=plan.name%>: <%= f.radio_button :plan_id, plan.id %>
+                        <b><%=plan.name%>: <%= f.radio_button :plan_id, plan.id %></b><br />
+                        No. of products per month: <%=plan.no_of_products%><br />
+                        No. of images per product: <%=plan.no_of_images%><br /><br />
                         <%end%>
                     </div>
                   </div>
