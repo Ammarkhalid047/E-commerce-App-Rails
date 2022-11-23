@@ -6,7 +6,14 @@ class Admin::PlanController < ApplicationController
         createplan = CreatePlan.new
         plan = createplan.create_stripe_plan(params[:plan][:name], params[:plan][:display_price], params[:plan][:duration])
         if plan != nil
-        @plan = Plan.new(stripe_id: plan.id, name: plan.name, display_price: plan.default_price.unit_amount, price_id: plan.default_price.id)
+        @plan = Plan.new(
+            stripe_id: plan.id, 
+            name: plan.name, 
+            display_price: plan.default_price.unit_amount, 
+            price_id: plan.default_price.id,
+            no_of_images: params[:plan][:no_of_images],
+            no_of_products: params[:plan][:no_of_products]
+        )
         @plan.save
         flash.notice = "Plan created Successfully!"
         else

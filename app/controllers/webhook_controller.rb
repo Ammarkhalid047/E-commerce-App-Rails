@@ -43,12 +43,17 @@ def create
         object = UpdateCustomer.new
         user = User.find_by_stripe_customer_id(event.data.object.customer)
         customer = object.update_subscription_status(user)
-        byebug
         subscription = Subscription.new(user_id: user.id ,plan_id: user.plan_id, start_at: Time.at(event.data.object.current_period_start) , ends_at: Time.at(event.data.object.current_period_end), stripe_subscription_id: event.data.object.id)
         subscription.save
 
     when 'customer.subscription.deleted'
         subscription = event.data.object
+
+    when 'customer.subscription.updated'
+
+        subscription = Subscription.find(event.data.object.id)
+        subscription.update(start_at: Time.at(event.data.object.current_period_start) , ends_at: Time.at(event.data.object.current_period_end))
+
     when 'payment_intent.amount_capturable_updated'
         payment_intent = event.data.object
     when 'payment_intent.canceled'
