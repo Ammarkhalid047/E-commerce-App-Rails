@@ -42,7 +42,8 @@ class Product < ApplicationRecord
 
     def check_seller_plan   
         product_count = self.shop.products.where('created_at > ?', DateTime.now.beginning_of_month).count
-        plan = self.shop.user.subscription.plan
+        byebug
+        plan = self.shop.user.plan
         case plan.name
         when 'Premium Plan'
             if product_count >= plan.no_of_products || self.images.length > plan.no_of_images
