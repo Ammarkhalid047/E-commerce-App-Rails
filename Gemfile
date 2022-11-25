@@ -41,9 +41,9 @@ gem 'omniauth-facebook'
 gem 'stripe'
 
 #redis for background job operations
-# gem 'redis'
-# gem 'redis-namespace'
-# gem 'redis-rails'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
 
 
 gem 'whenever', require: false
