@@ -23,8 +23,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @session = createcustomer.create_checkout_session(customer, @user)
       redirect_to @session.url
       else
-      redirect_to root_path
-      
+      redirect_to root_path 
+      end
     else
       flash.now[:error] = @user.errors.full_messages
       render :new
