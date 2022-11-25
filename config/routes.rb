@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  get 'errors/not_found'
+  # get 'errors/not_found'
   namespace :seller do
     resources :subscriptions do
       member do
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
   get 'shoppingcart' => "shoppingcart#show"
 
 
-  match '*path', :to => redirect('/404_Not_Found.html'), via: :all
+  # match '*path', :to => redirect('/404_Not_Found.html'), via: :all
   
   
 end
