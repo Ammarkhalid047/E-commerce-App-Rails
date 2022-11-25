@@ -16,7 +16,7 @@ class OrderController < ApplicationController
       end   
 
       def authentication
-        AuthenticationMailer.otp(params[:email],params[:otp]).deliver_now
+        AuthenticationMailer.otp(params[:email], params[:otp]).deliver_now
       end
       
       def create
@@ -29,7 +29,6 @@ class OrderController < ApplicationController
         current_cart = current_user.shoppingcart
         cart_items = current_cart.cart_items
         CartItem.createOrderItems(@order, current_cart, cart_items, promo_items)
-        
         if @order.save
           current_cart.cart_items.delete_all
           flash.notice = "Your Order Has Been Successfully Placed!"

@@ -19,8 +19,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       createcustomer = CreateCustomer.new
       @user.save!
       customer = createcustomer.create_stripe_customer(@user)
+      if @user.role == 'seller'
       @session = createcustomer.create_checkout_session(customer, @user)
       redirect_to @session.url
+      else
+      redirect_to root_path
+      
     else
       flash.now[:error] = @user.errors.full_messages
       render :new
