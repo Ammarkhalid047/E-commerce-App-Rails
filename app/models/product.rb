@@ -42,7 +42,6 @@ class Product < ApplicationRecord
 
     def check_seller_plan   
         product_count = self.shop.products.where('created_at > ?', DateTime.now.beginning_of_month).count
-        byebug
         plan = self.shop.user.plan
         case plan.name
         when 'Premium Plan'
