@@ -5,13 +5,18 @@ class ReviewController < ApplicationController
         @review = current_user.reviews.new(review_params)
         if @review.save
             @product = Product.find((params[:review][:product_id]).to_i)
+            ActionCable.server.broadcast "notifications:#{ @product.shop.user.id }", { html:
+                "<div class='alert alert-success alert-block text-center'>
+                    A review has been added to your product
+                 </div>"
+                }
             @reviews = @product.reviews
             flash.alert = "Your Review has been added to the Product, Thankyou for your feedback!"
         else
             flash.alert = "Sorry, Your review cannot be added at the moment, please try later."
         end
         respond_to do |format|
-            format.html { redirect_to index }
+            format.html { redirect_to root_path}
             format.json { head :no_content }
             format.js   { render :layout => false }
          end

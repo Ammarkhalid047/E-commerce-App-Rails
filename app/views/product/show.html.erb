@@ -67,7 +67,7 @@
         <%=render 'shared/show_ratings'%>
         </div>
       <h3><b>Add a Review</b></h3>
-      <%= form_for :review , url: review_index_path , remote: true, class: 'form-group' do |f| %>
+      <%= form_for :review , url: review_index_path , class: 'form-group' do |f| %>
             <div class="form-outline mb-4" style='text-align:left'>
               Description : <br />
              <%= f.rich_text_area :description, :id => "desc"%><br />
